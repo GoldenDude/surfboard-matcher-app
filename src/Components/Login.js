@@ -1,6 +1,7 @@
 
 import GoogleLogin from 'react-google-login';
 import React, { Component }  from 'react';
+import logo from '../logo.png';
 
 class Login extends Component{
     constructor(props){
@@ -20,14 +21,16 @@ class Login extends Component{
 
     renderLogin(){
         return(
-            <div className = "login">
-                <h1>Surfboard Matcher</h1>
-                <GoogleLogin
-                    clientId="366517766809-oktrgpvmmhneovtvi5a1q08cos7ahr66.apps.googleusercontent.com"
-                    buttonText="Login With Google"
-                    onSuccess={this.responseGoogle}
-                    onFailure={this.responseGoogle}  
-                />
+            <div className = "Welcome">
+                <img src = {logo} alt = "Logo"/>
+                <div className = "login">
+                    <GoogleLogin
+                        clientId="366517766809-oktrgpvmmhneovtvi5a1q08cos7ahr66.apps.googleusercontent.com"
+                        buttonText="Login With Google"
+                        onSuccess={this.responseGoogle}
+                        onFailure={this.responseGoogle}  
+                    />
+                </div>
             </div>
         );
     }
