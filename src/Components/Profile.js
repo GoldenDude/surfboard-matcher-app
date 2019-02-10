@@ -4,7 +4,7 @@ import React, { Component }  from 'react';
 import HomePage from './HomePage.js';
 import logo from '../logo.png';
 
-class Login extends Component{
+class Profile extends Component{
     constructor(props){
         super(props);
 
@@ -38,15 +38,11 @@ class Login extends Component{
 
     renderLogged(){
         return(
-            <div>
-                <HomePage admin = "false">
-                    <h5>
-                        Hello.
-                        email: {this.state.email}
-                        user:  {this.state.user}
-                    </h5>
-                    <img src = {this.state.pic} alt = "Profile"/>
-                </HomePage>
+            
+            <div className="card Welcome">
+                <img src = {this.state.pic} alt = {this.state.user}/>
+                <h1>{this.state.user}</h1>
+                <p className = "title">{this.state.email}</p>
             </div>
         )
     }
@@ -67,4 +63,4 @@ class Login extends Component{
     }
 }
 
-export default Login;
+export default Profile;

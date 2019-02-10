@@ -1,5 +1,5 @@
 import React, { Component }  from 'react';
-
+import logo from '../logo.png';
 
 
 class HomePage extends Component{
@@ -18,8 +18,8 @@ class HomePage extends Component{
 
     renderUser(){
         return (
-            <div className = "HomePage">
-                {this.props.children}
+            <div className = "Welcome">
+                <img src = {logo} alt = "Logo"/>
             </div>
         )
     }

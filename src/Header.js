@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
 import Matcher from './Matcher.png';
-const path = window.location.pathname === "/Search" ? "/" : window.location.pathname;
+const path = window.location.pathname === "/Profile" ? "/" : window.location.pathname;
 
 class Header extends Component{
     active = {
@@ -21,7 +21,7 @@ class Header extends Component{
                         Home
                     </NavLink>
 
-                    <NavLink to = {`${path}Search`} activeStyle = {this.active} className = "navLink nav-item">
+                    <NavLink to = {`${path}Profile`} activeStyle = {this.active} className = "navLink nav-item">
                         My Profile
                     </NavLink>
                 </div>
