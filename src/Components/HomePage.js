@@ -1,4 +1,5 @@
 import React, { Component }  from 'react';
+import SurfboardList from './SurfboardList';
 import logo from '../logo.png';
 
 
@@ -12,14 +13,18 @@ class HomePage extends Component{
         this.state = {
             admin: false,
             name: null,
-            email: null
+            email: null,
+            surfboards: 0
         }
     }
 
     renderUser(){
         return (
-            <div className = "Welcome">
-                <img src = {logo} alt = "Logo"/>
+            <div className = "container">
+                <div className = "Welcome">
+                    <img src = {logo} alt = "Logo"/>
+                </div>
+                <SurfboardList></SurfboardList>
             </div>
         )
     }

@@ -1,7 +1,6 @@
 
 import GoogleLogin from 'react-google-login';
 import React, { Component }  from 'react';
-import HomePage from './HomePage.js';
 import logo from '../logo.png';
 
 class Profile extends Component{

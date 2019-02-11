@@ -1,8 +1,8 @@
 .Welcome{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    top: 100px;
+    left: 35%;
+    width: 500px;
 }
 
 .login{
@@ -20,6 +20,7 @@ body{
     position: relative;
     left: 370px;
     top: 35px;
+    width: 570px;
 }
 .navLink{
     font-family: Arial, sans-serif;
@@ -40,4 +41,44 @@ body{
 
 .Matcher{
     margin-right: 130px;
+}
+
+.saved{
+    background-color: rgb(53, 204, 53);
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    margin-top: 5px;
+    width: 80%;
+    text-align: center;
+    border-radius: 2px;
+    border: none;
+    float: left;
+}
+
+.card{
+    float:left;
+    margin-top: 10px;
+    margin-right: 10px;
+    min-height: 720px;
+    width: 300px;
+}
+
+.card-body{
+    max-height: 720px;
+    width: 300px;
+}
+
+.surfboardList{
+    position: relative;
+    top: 150px;
+}
+
+.container{
+    max-width: 1230px;
+}
+
+.addToFav{
+    position: relative;
+    float: left;
 }
