@@ -10,12 +10,15 @@ class SurfboardList extends Component{
         this.state = {
             allSurfboards: [],
             shownSurfboards: [],
+            email: this.props.email,
+            name: this.props.name,
             shown: 20
         }
 
         this.add           = this.add.bind(this);
         this.nextID        = this.nextID.bind(this);
         this.eachSurfboard = this.eachSurfboard.bind(this);
+        this.addToFav      = this.addToFav.bind(this);
     }
 
     componentDidMount(){
@@ -68,7 +71,7 @@ class SurfboardList extends Component{
             }))
         }
     }
-
+    
     nextID(surfboards = []){
         let max = surfboards.reduce((prev, curr) => prev.id > curr.id ? prev.id :  curr.id, 0);
         return ++max;
@@ -76,21 +79,54 @@ class SurfboardList extends Component{
 
     eachSurfboard(surfboards, i) {
         return (
-        <div className = "card" key = {`container${i}`} style={{width: 18 + 'rem', marginBottom: 7 + 'px'}}>
+        <div className = "card" key = {`container${i}`}>
             <div className = "card-body">
-                <Surfboard key = {`surfboard${i}`} index = {surfboards.id}>
+                <Surfboard key = {`surfboard${i}`} index = {surfboards.id} onAdd = {this.addToFav}>
                     <img src = {SurfboardPic} alt = "surfboard"/>
                     <h5 className = "card-title">{surfboards.brand}</h5>
-                    <p className = "card-text">Minimum Weight: {surfboards.userMinWeight}</p>
-                    <p className = "card-text">Maximum Weight: {surfboards.userMaxWeight}</p>
-                    <p className = "card-text">Width: {surfboards.width}</p>
-                    <p className = "card-text">Thickness: {surfboards.thickness}</p>
-                    <p className = "card-text">Height: {surfboards.height}</p>
-                    <p className = "card-text">Max Swell Size: {surfboards.maxSwell}</p>
+                    <p className  = "card-text">Minimum Weight: {surfboards.userMinWeight}kg</p>
+                    <p className  = "card-text">Maximum Weight: {surfboards.userMaxWeight}kg</p>
+                    <p className  = "card-text">Width: {surfboards.width}cm</p>
+                    <p className  = "card-text">Thickness: {surfboards.thickness}cm</p>
+                    <p className  = "card-text">Height: {surfboards.height}cm</p>
+                    <p className  = "card-text">Max Swell Size: {surfboards.maxSwell}m</p>
                 </Surfboard>
             </div>
         </div>
         )
+    }
+
+    addToFav(index){
+        const url = 'https://surfboard-matcher.herokuapp.com/addUserSurfboard';
+        var surfboardToAdd;
+
+        /* Finding the surfboard in the state */
+        this.state.shownSurfboards.map( surfboard => {
+            if(surfboard.id === index)
+                surfboardToAdd = surfboard;
+
+            return null;
+        })
+
+        const json = {
+            surfboard: surfboardToAdd,
+            email: this.state.email
+        }
+        console.log(JSON.stringify(json));
+
+        if(surfboardToAdd){
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: json
+            }).then(res => res.json())
+                .then(json => {
+                    console.log(JSON.stringify(json));
+                })
+        }
     }
 
     render(){

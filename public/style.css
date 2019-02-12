@@ -48,12 +48,13 @@ body{
     color: #FFFFFF;
     font-family: Arial, sans-serif;
     font-size: 12px;
-    margin-top: 5px;
+    margin-top: 10px;
     width: 80%;
     text-align: center;
     border-radius: 2px;
     border: none;
     float: left;
+    margin-left: 5px;
 }
 
 .card{
@@ -61,12 +62,12 @@ body{
     margin-top: 10px;
     margin-right: 10px;
     min-height: 720px;
-    width: 300px;
+    width: 290px;
 }
 
 .card-body{
-    max-height: 720px;
-    width: 300px;
+    max-height: 700px;
+    width: 290px;
 }
 
 .surfboardList{
@@ -81,4 +82,23 @@ body{
 .addToFav{
     position: relative;
     float: left;
+}
+
+h5{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.surfboard > img {
+    width: 245px;
+}
+
+.Heart{
+    margin-right: 5px;
+
+}
+
+.nonFav{
+    color: #007bff;
+    background-color: #ffffff;
 }

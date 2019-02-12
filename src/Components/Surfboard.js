@@ -16,7 +16,7 @@ class Surfboard extends Component{
     }
 
     addToFav(){
-        /* need to add code that will add the surfboard to the user's history. */ 
+        this.props.onAdd(this.props.index)
         this.setState({
             favorite: true
         })
@@ -34,8 +34,7 @@ class Surfboard extends Component{
             <div className = "surfboard">
                    {this.props.children}
                    <span>
-                       <button onClick = {this.removeFromFav} className = "btn btn-primary"><MdFavorite/></button>
-                       <p className = "saved">This Surfboard Is In Your Favorites</p>
+                       <button onClick = {this.removeFromFav} className = "btn btn-primary addToFav"><MdFavorite className = "Heart"/>Favorited</button>
                    </span>
                </div>
        )
@@ -46,7 +45,7 @@ class Surfboard extends Component{
             <div className = "surfboard">
                    {this.props.children}
                    <span>
-                       <button onClick = {this.addToFav} className = "btn btn-primary"><MdFavoriteBorder/></button>
+                       <button onClick = {this.addToFav} className = "btn btn-primary addToFav nonFav"><MdFavoriteBorder className = "Heart"/>Add To Favorites</button>
                    </span>
                </div>
        )
