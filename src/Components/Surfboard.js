@@ -6,7 +6,7 @@ class Surfboard extends Component{
     constructor(props){
         super(props);
         this.state = {
-            favorite: false
+            favorite: this.props.favorite
         }
 
         this.renderFavorite = this.renderFavorite.bind(this);
@@ -16,10 +16,7 @@ class Surfboard extends Component{
     }
 
     addToFav(){
-        this.props.onAdd(this.props.index)
-        this.setState({
-            favorite: true
-        })
+        this.props.onAdd(this.props.index, this);
     }
 
     removeFromFav(){
@@ -32,22 +29,22 @@ class Surfboard extends Component{
     renderFavorite(){
         return(
             <div className = "surfboard">
-                   {this.props.children}
-                   <span>
-                       <button onClick = {this.removeFromFav} className = "btn btn-primary addToFav"><MdFavorite className = "Heart"/>Favorited</button>
-                   </span>
-               </div>
+                {this.props.children}
+                <span>
+                    <button onClick = {this.removeFromFav} className = "btn btn-primary addToFav"><MdFavorite className = "Heart"/>Favorited</button>
+                </span>
+            </div>
        )
     }
 
     renderRegular(){
         return(
             <div className = "surfboard">
-                   {this.props.children}
-                   <span>
-                       <button onClick = {this.addToFav} className = "btn btn-primary addToFav nonFav"><MdFavoriteBorder className = "Heart"/>Add To Favorites</button>
-                   </span>
-               </div>
+                {this.props.children}
+                <span>
+                    <button onClick = {this.addToFav} className = "btn btn-primary addToFav nonFav"><MdFavoriteBorder className = "Heart"/>Add To Favorites</button>
+                </span>
+            </div>
        )
     }
 

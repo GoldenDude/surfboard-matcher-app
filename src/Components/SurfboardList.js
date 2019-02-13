@@ -19,6 +19,7 @@ class SurfboardList extends Component{
         this.nextID        = this.nextID.bind(this);
         this.eachSurfboard = this.eachSurfboard.bind(this);
         this.addToFav      = this.addToFav.bind(this);
+        this.removeFromFav = this.removeFromFav.bind(this);
     }
 
     componentDidMount(){
@@ -42,7 +43,7 @@ class SurfboardList extends Component{
         this.setState(prevState => ({
             allSurfboards: [
                 ...prevState.allSurfboards, {
-                    id: id !== null? id : this.nextID(prevState.allSurfboards),
+                    id: id !== null ? id : this.nextID(prevState.allSurfboards),
                     brand: brand,
                     userMinWeight: userMinWeight,
                     userMaxWeight: userMaxWeight,
@@ -65,7 +66,8 @@ class SurfboardList extends Component{
                         width: width,
                         thickness: thickness,
                         height: height,
-                        maxSwell: maxSwell
+                        maxSwell: maxSwell,
+                        favorite: false
                     }
                 ]
             }))
@@ -79,26 +81,26 @@ class SurfboardList extends Component{
 
     eachSurfboard(surfboards, i) {
         return (
-        <div className = "card" key = {`container${i}`}>
-            <div className = "card-body">
-                <Surfboard key = {`surfboard${i}`} index = {surfboards.id} onAdd = {this.addToFav}>
-                    <img src = {SurfboardPic} alt = "surfboard"/>
-                    <h5 className = "card-title">{surfboards.brand}</h5>
-                    <p className  = "card-text">Minimum Weight: {surfboards.userMinWeight}kg</p>
-                    <p className  = "card-text">Maximum Weight: {surfboards.userMaxWeight}kg</p>
-                    <p className  = "card-text">Width: {surfboards.width}cm</p>
-                    <p className  = "card-text">Thickness: {surfboards.thickness}cm</p>
-                    <p className  = "card-text">Height: {surfboards.height}cm</p>
-                    <p className  = "card-text">Max Swell Size: {surfboards.maxSwell}m</p>
-                </Surfboard>
+            <div className = "card" key = {`container${i}`}>
+                <div className = "card-body">
+                    <Surfboard key = {`surfboard${i}`} index = {surfboards.id} onAdd = {this.addToFav} onRemove = {this.removeFromFav} favorite = {surfboards.favorite}>
+                        <img src = {SurfboardPic} alt = "surfboard"/>
+                        <h5 className = "card-title">{surfboards.brand}</h5>
+                        <p className  = "card-text">Minimum Weight: {surfboards.userMinWeight}kg</p>
+                        <p className  = "card-text">Maximum Weight: {surfboards.userMaxWeight}kg</p>
+                        <p className  = "card-text">Width: {surfboards.width}cm</p>
+                        <p className  = "card-text">Thickness: {surfboards.thickness}cm</p>
+                        <p className  = "card-text">Height: {surfboards.height}cm</p>
+                        <p className  = "card-text">Max Swell Size: {surfboards.maxSwell}m</p>
+                    </Surfboard>
+                </div>
             </div>
-        </div>
         )
     }
 
-    addToFav(index){
+    addToFav(index, surfboard){
         const url = 'https://surfboard-matcher.herokuapp.com/addUserSurfboard';
-        var surfboardToAdd;
+        let surfboardToAdd;
 
         /* Finding the surfboard in the state */
         this.state.shownSurfboards.map( surfboard => {
@@ -109,10 +111,18 @@ class SurfboardList extends Component{
         })
 
         const json = {
-            surfboard: surfboardToAdd,
+            surfboard: {
+                _id:            surfboardToAdd.id,
+                brand:          surfboardToAdd.brand,
+                userMinWeight:  surfboardToAdd.userMinWeight,
+                userMaxWeight:  surfboardToAdd.userMaxWeight,
+                width:          surfboardToAdd.width,
+                thickness:      surfboardToAdd.thickness,
+                height:         surfboardToAdd.height,
+                maxSwell:       surfboardToAdd.maxSwell 
+            },
             email: this.state.email
         }
-        console.log(JSON.stringify(json));
 
         if(surfboardToAdd){
             fetch(url, {
@@ -121,12 +131,34 @@ class SurfboardList extends Component{
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: json
+                body: JSON.stringify(json)
             }).then(res => res.json())
                 .then(json => {
-                    console.log(JSON.stringify(json));
+                    console.log(JSON.stringify(json));  
+                    if(json.result === "Success"){
+                        surfboard.setState({favorite: true});
+                    }   
                 })
+            .catch(err => console.log(err));
         }
+    }
+
+    removeFromFav(index, surfboard){
+        const url = `https://surfboard-matcher.herokuapp.com/deleteFromHistroy?id=${index}`;
+
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+            },
+        }).then(res => res.json())
+            .then(json => {
+                console.log(JSON.stringify(json));  
+                if(json.result === "Success"){
+                    surfboard.setState({favorite: false});
+                }   
+            })
+        .catch(err => console.log(err));
     }
 
     render(){
