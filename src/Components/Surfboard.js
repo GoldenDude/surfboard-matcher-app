@@ -21,9 +21,10 @@ class Surfboard extends Component{
 
     removeFromFav(){
         /* need to add code that will remove the surfboard from the user's history. */ 
-        this.setState({
-            favorite: false
-        })
+        this.props.onRemove(this.props.index, this);
+        // this.setState({
+        //     favorite: false
+        // })
     }
 
     renderFavorite(){

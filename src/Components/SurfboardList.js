@@ -144,7 +144,7 @@ class SurfboardList extends Component{
     }
 
     removeFromFav(index, surfboard){
-        const url = `https://surfboard-matcher.herokuapp.com/deleteFromHistroy?id=${index}`;
+        const url = `https://surfboard-matcher.herokuapp.com/deleteFromHistory?_id=${index}&email=${this.state.email}`;
 
         fetch(url, {
             method: 'DELETE',
