@@ -20,7 +20,7 @@ body{
 .navbar{
     position: fixed;
     width: 100%;
-    background-color: rgb(198, 228, 238);
+    background-color:#4b759f;
     padding-left: 370px;
     z-index: 1;
 }
@@ -28,11 +28,11 @@ body{
 .navLink{
     font-family: Arial, sans-serif;
     text-decoration: none;
-    color: #37393c;
     font-weight: bold;
     padding: 5px;
     border-radius: 5px;
     margin-right: 30px;
+    color: #ffffff;
 }
 
 .navLink:hover{
@@ -104,4 +104,8 @@ h5{
 .nonFav{
     color: #007bff;
     background-color: #ffffff;
+}
+
+.Logo{
+    margin-left: 30px;
 }

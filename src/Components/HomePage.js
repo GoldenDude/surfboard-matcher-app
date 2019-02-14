@@ -60,7 +60,7 @@ class HomePage extends Component{
         return (
             <div className = "container">
                 <div className = "Welcome">
-                    <img src = {logo} alt = "Logo"/>
+                    <img src = {logo} alt = "Logo" className = "Logo"/>
                 </div>
                 <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm>
                 <Element id = "products">
@@ -74,7 +74,7 @@ class HomePage extends Component{
         return (
             <div className = "container">
                 <div className = "Welcome">
-                    <img src = {logo} alt = "Logo"/>
+                    <img src = {logo} alt = "Logo" className = "Logo"/>
                     <div className = "login">
                         <GoogleLogin
                             clientId    = "366517766809-oktrgpvmmhneovtvi5a1q08cos7ahr66.apps.googleusercontent.com"
