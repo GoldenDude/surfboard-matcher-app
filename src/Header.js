@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom';
-import {Link, animateScroll as scroll} from 'react-scroll';
+import {Link} from 'react-scroll';
 import Matcher from './Matcher.png';
-const path = window.location.pathname === "/Profile" ? "/" : window.location.pathname;
 
 class Header extends Component{
     render(){

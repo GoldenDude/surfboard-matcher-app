@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
-import {Link, animateScroll as scroll, Element} from 'react-scroll';
+import {Element} from 'react-scroll';
 import logo from '../logo.png';
 import MatchForm from './MatchForm';
 
