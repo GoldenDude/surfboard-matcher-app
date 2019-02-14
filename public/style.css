@@ -131,6 +131,5 @@ h5{
 
 .loadMore:hover{
     color: #000000;
-    /* box-shadow: 0 0 2px 2px #a09e9e 0.7; */
-    box-shadow: 2px 2px 2px 2px rgba(56, 56, 56, 0.2);
+    box-shadow: 2px 2px 2px rgba(56, 56, 56, 0.2);
 }
