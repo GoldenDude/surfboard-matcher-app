@@ -1,13 +1,14 @@
 .Welcome{
     position: relative;
     top: 100px;
-    left: 35%;
     width: 500px;
+    margin: auto;
 }
 
 .login{
     position: relative;
-    left: 30%;
+    margin: auto;
+    width: max-content;
 }
 
 body{
@@ -17,11 +18,13 @@ body{
 }
 
 .navbar{
-    position: relative;
-    left: 370px;
-    top: 35px;
-    width: 570px;
+    position: fixed;
+    width: 100%;
+    background-color: rgb(198, 228, 238);
+    padding-left: 370px;
+    z-index: 1;
 }
+
 .navLink{
     font-family: Arial, sans-serif;
     text-decoration: none;

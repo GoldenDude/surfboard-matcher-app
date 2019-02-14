@@ -1,7 +1,9 @@
 import React, { Component }  from 'react';
 import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
+import {Link, animateScroll as scroll, Element} from 'react-scroll';
 import logo from '../logo.png';
+import MatchForm from './MatchForm';
 
 
 class HomePage extends Component{
@@ -11,6 +13,7 @@ class HomePage extends Component{
         this.renderLogged        = this.renderLogged.bind(this);
         this.renderLoggedOut     = this.renderLoggedOut.bind(this);
         this.responseGoogle      = this.responseGoogle.bind(this);
+        this.failedToConnect     = this.failedToConnect.bind(this);
         
         this.state = {
             admin: false,
@@ -20,7 +23,8 @@ class HomePage extends Component{
         }
     }
 
-    responseGoogle = (response) => {
+    responseGoogle(response){
+        const url = 'https://surfboard-matcher.herokuapp.com/addUser';
         let profile = response.profileObj;
         this.setState({
             logged: true,
@@ -28,7 +32,28 @@ class HomePage extends Component{
             name: profile.name,
         });
 
+        const newUser = {
+            email: profile.email,
+            name: profile.name
+        }
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newUser)
+        }).then(res => res.json())
+            .then(json => {
+                console.log(json);
+            })
+
         /* Need to add query to add a new user to the DB */
+    }
+
+    failedToConnect(response){
+        alert("Connection Failed!");
     }
 
     renderLogged(){
@@ -37,7 +62,10 @@ class HomePage extends Component{
                 <div className = "Welcome">
                     <img src = {logo} alt = "Logo"/>
                 </div>
-                <SurfboardList email = {this.state.email} name = {this.state.name}></SurfboardList>
+                <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm>
+                <Element id = "products">
+                    <SurfboardList email = {this.state.email} userName = {this.state.name}></SurfboardList>
+                </Element>
             </div>
         )
     }
@@ -52,7 +80,7 @@ class HomePage extends Component{
                             clientId    = "366517766809-oktrgpvmmhneovtvi5a1q08cos7ahr66.apps.googleusercontent.com"
                             buttonText  = "Login With Google"
                             onSuccess   = {this.responseGoogle}
-                            onFailure   = {this.responseGoogle}
+                            onFailure   = {this.failedToConnect}
                         />
                     </div>
                 </div>

@@ -11,7 +11,6 @@ const ReactRouter = () => {
         <React.Fragment>
             <Header/>
             <Route exact path = {path} component = {HomePage}/>
-            <Route path = {`${path}Profile`} component = {Profile}/>
         </React.Fragment>
     )
 }

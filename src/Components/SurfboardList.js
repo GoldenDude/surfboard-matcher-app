@@ -11,8 +11,8 @@ class SurfboardList extends Component{
             allSurfboards: [],
             shownSurfboards: [],
             email: this.props.email,
-            name: this.props.name,
-            shown: 20
+            name: this.props.userName,
+            shown: 8
         }
 
         this.add           = this.add.bind(this);
