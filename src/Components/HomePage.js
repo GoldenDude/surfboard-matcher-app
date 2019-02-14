@@ -2,9 +2,8 @@ import React, { Component }  from 'react';
 import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
 import {Element} from 'react-scroll';
-import {ReactHeight} from 'react-height';
 import logo from '../logo.png';
-import MatchForm from './MatchForm';
+// import MatchForm from './MatchForm';
 
 
 class HomePage extends Component{

@@ -19,6 +19,7 @@ class SurfboardList extends Component{
         this.eachSurfboard = this.eachSurfboard.bind(this);
         this.addToFav      = this.addToFav.bind(this);
         this.removeFromFav = this.removeFromFav.bind(this);
+        this.loadMore      = this.loadMore.bind(this);
     }
 
     componentDidMount(){
@@ -97,6 +98,41 @@ class SurfboardList extends Component{
         )
     }
 
+    loadMore(){
+        let self = this;
+        let oldShown = self.state.shown;
+        let newShown = oldShown + 8;
+        let surfboard;
+        
+        self.setState({shown: newShown});
+
+        for(oldShown; oldShown < newShown; ++oldShown){
+            surfboard = self.state.allSurfboards[oldShown];
+            this.addToShown(surfboard);
+            console.log(surfboard);
+        }
+
+    }
+
+    addToShown(surfboard){
+        let self = this;
+        self.setState(prevState => ({
+            shownSurfboards: [
+                ...prevState.shownSurfboards, {
+                    id: surfboard.id !== null? surfboard.id : this.nextID(prevState.shownSurfboards),
+                    brand: surfboard.brand,
+                    userMinWeight: surfboard.userMinWeight,
+                    userMaxWeight: surfboard.userMaxWeight,
+                    width: surfboard.width,
+                    thickness: surfboard.thickness,
+                    height: surfboard.height,
+                    maxSwell: surfboard.maxSwell,
+                    favorite: false
+                }
+            ]
+        }))
+    }
+
     addToFav(index, surfboard){
         const url = 'https://surfboard-matcher.herokuapp.com/addUserSurfboard';
         let surfboardToAdd;
@@ -162,11 +198,12 @@ class SurfboardList extends Component{
 
     render(){
 
-        document.body.style.height = (this.state.shown / 4) * 720 + "px";
-        
+        document.body.style.height = (this.state.shown / 4) * 720 + 50 + "px";
+
         return(
             <div className = 'surfboardList'>
                 {this.state.shownSurfboards.map(this.eachSurfboard)}
+                <button className = "loadMore" onClick = {this.loadMore}>Show More Surfboards!</button>
             </div>
         )
     }
