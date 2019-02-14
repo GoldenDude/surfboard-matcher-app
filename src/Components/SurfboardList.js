@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Surfboard from './Surfboard';
 import SurfboardPic from '../surfboard.png'
 
-
 class SurfboardList extends Component{
     constructor(props){
         super(props);
@@ -162,6 +161,9 @@ class SurfboardList extends Component{
     }
 
     render(){
+
+        document.body.style.height = (this.state.shown / 4) * 720 + "px";
+        
         return(
             <div className = 'surfboardList'>
                 {this.state.shownSurfboards.map(this.eachSurfboard)}

@@ -2,6 +2,7 @@ import React, { Component }  from 'react';
 import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
 import {Element} from 'react-scroll';
+import {ReactHeight} from 'react-height';
 import logo from '../logo.png';
 import MatchForm from './MatchForm';
 
@@ -58,32 +59,40 @@ class HomePage extends Component{
 
     renderLogged(){
         return (
-            <div className = "container">
-                <div className = "Welcome">
-                    <img src = {logo} alt = "Logo" className = "Logo"/>
+            <div>
+                <Element id = "top"/>
+                <div className = "firstBackground">
+                    <div className = "container">
+                        <div className = "Welcome">
+                            <img src = {logo} alt = "Logo" className = "Logo"/>
+                        </div>
+                        {/* <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm> */}
+                        <Element id = "products">
+                            <SurfboardList email = {this.state.email} userName = {this.state.name}></SurfboardList>
+                        </Element>
+                    </div>
                 </div>
-                <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm>
-                <Element id = "products">
-                    <SurfboardList email = {this.state.email} userName = {this.state.name}></SurfboardList>
-                </Element>
-            </div>
+            </div> 
         )
     }
 
     renderLoggedOut(){
         return (
-            <div className = "container">
-                <div className = "Welcome">
-                    <img src = {logo} alt = "Logo" className = "Logo"/>
-                    <div className = "login">
-                        <GoogleLogin
-                            clientId    = "366517766809-oktrgpvmmhneovtvi5a1q08cos7ahr66.apps.googleusercontent.com"
-                            buttonText  = "Login With Google"
-                            onSuccess   = {this.responseGoogle}
-                            onFailure   = {this.failedToConnect}
-                        />
+            <div className = "firstBackground">
+                <div className = "container">
+                    <div className = "Welcome">
+                        <img src = {logo} alt = "Logo" className = "Logo"/>
+                        <div className = "login">
+                            <GoogleLogin
+                                clientId    = "366517766809-oktrgpvmmhneovtvi5a1q08cos7ahr66.apps.googleusercontent.com"
+                                buttonText  = "Login With Google"
+                                onSuccess   = {this.responseGoogle}
+                                onFailure   = {this.failedToConnect}
+                            />
+                        </div>
                     </div>
                 </div>
+                
             </div>
         )
     }

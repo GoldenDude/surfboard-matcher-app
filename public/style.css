@@ -1,6 +1,10 @@
+html, body, #root {
+    height: 100%;
+}
+
 .Welcome{
     position: relative;
-    top: 100px;
+    top: 120px;
     width: 500px;
     margin: auto;
 }
@@ -11,18 +15,20 @@
     width: max-content;
 }
 
-body{
+.firstBackground{
     display: block;
     background-repeat: no-repeat;
     background-image: url('./images/Wave.png');
+    height: 670px;
 }
 
 .navbar{
-    position: fixed;
+    position: sticky;
     width: 100%;
-    background-color:#4b759f;
+    background-color:#1f1f1f;
     padding-left: 370px;
     z-index: 1;
+    top: 0;
 }
 
 .navLink{

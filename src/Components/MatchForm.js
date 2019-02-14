@@ -8,7 +8,10 @@ class MatchForm extends Component{
         this.state = {
             email: null,
             name: null,
-
+            level: 0,
+            weight: 0,
+            height: 0,
+            result: []
         }
     }
     
