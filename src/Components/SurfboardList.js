@@ -98,9 +98,16 @@ class SurfboardList extends Component{
         )
     }
 
-    loadMore(){
+    async loadMore(){
         let self = this;
         let oldShown = self.state.shown;
+
+        if(oldShown >= self.state.allSurfboards.length){
+            oldShown = self.state.allSurfboards.length;
+            document.body.getElementsByClassName("loadMore")[0].style.display = "none";
+            return;
+        }
+
         let newShown = oldShown + 8;
         let surfboard;
         
@@ -109,7 +116,10 @@ class SurfboardList extends Component{
         for(oldShown; oldShown < newShown; ++oldShown){
             surfboard = self.state.allSurfboards[oldShown];
             this.addToShown(surfboard);
-            console.log(surfboard);
+        }  
+
+        if(newShown >= self.state.allSurfboards.length){
+            document.body.getElementsByClassName("loadMore")[0].style.display = "none";
         }
 
     }
@@ -203,7 +213,7 @@ class SurfboardList extends Component{
         return(
             <div className = 'surfboardList'>
                 {this.state.shownSurfboards.map(this.eachSurfboard)}
-                <button className = "loadMore" onClick = {this.loadMore}>Show More Surfboards!</button>
+                <button className = "loadMore" onClick = {this.loadMore}>Show More!</button>
             </div>
         )
     }

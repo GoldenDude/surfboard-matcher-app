@@ -16,10 +16,10 @@ class Header extends Component{
                     </Link>
 
                     <Link href = "#" to = "products" smooth = {true} offset = {50} duration = {500} className = "navLink nav-item">
-                        Matching Form
+                        Find a Match!
                     </Link>
 
-                    <Link href = "#" to = "products" smooth = {true} offset = {20} duration = {500} className = "navLink nav-item">
+                    <Link href = "#" to = "products" smooth = {true} offset = {60} duration = {500} className = "navLink nav-item">
                         Our Products
                     </Link>
 

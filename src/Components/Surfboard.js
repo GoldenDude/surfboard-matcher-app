@@ -28,7 +28,7 @@ class Surfboard extends Component{
             <div className = "surfboard">
                 {this.props.children}
                 <span>
-                    <button onClick = {this.removeFromFav} className = "btn btn-primary addToFav"><MdFavorite className = "Heart"/>Favorited</button>
+                    <button onClick = {this.removeFromFav} className = "btn btn-primary addToFav"><MdFavorite className = "Heart"/>Favorite</button>
                 </span>
             </div>
        )

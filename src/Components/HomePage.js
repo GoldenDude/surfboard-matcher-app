@@ -3,7 +3,7 @@ import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
 import {Element} from 'react-scroll';
 import logo from '../logo.png';
-// import MatchForm from './MatchForm';
+import MatchForm from './MatchForm';
 
 
 class HomePage extends Component{
@@ -20,36 +20,54 @@ class HomePage extends Component{
             logged: false,
             name: null,
             email: null,
+            level: 0,
+            weight: 0,
+            height: 0,
         }
     }
 
     responseGoogle(response){
-        const url = 'https://surfboard-matcher.herokuapp.com/addUser';
         let profile = response.profileObj;
-        this.setState({
-            logged: true,
-            email: profile.email,
-            name: profile.name,
-        });
-
+        const getUserUrl = `https://surfboard-matcher.herokuapp.com/getUser?email=${profile.email}`;
+        const addUserUrl = 'https://surfboard-matcher.herokuapp.com/addUser';
         const newUser = {
             email: profile.email,
             name: profile.name
         }
 
-        fetch(url, {
-            method: "POST",
+        fetch(getUserUrl, {
+            method: "GET",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newUser)
         }).then(res => res.json())
             .then(json => {
                 console.log(json);
+                /* Checking if user already exists in the database before trying to add it */
+                if(json.result === 'Failure'){
+                    console.log("Adding a New User");
+                    fetch(addUserUrl, {
+                        method: "POST",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(newUser)
+                    }).then(res => res.json())
+                        .then(json => {
+                            console.log(json);
+                        })
+                        .catch(err => console.log(err));
+                }
+                else console.log("User Already Exists");
+                this.setState({
+                    logged: true,
+                    email: profile.email,
+                    name: profile.name,
+                });
             })
-
-        /* Need to add query to add a new user to the DB */
+            .catch(err => console.log(err));
     }
 
     failedToConnect(response){
@@ -65,12 +83,12 @@ class HomePage extends Component{
                         <div className = "Welcome">
                             <img src = {logo} alt = "Logo" className = "Logo"/>
                         </div>
-                        {/* <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm> */}
-                        <Element id = "products">
-                            <SurfboardList email = {this.state.email} userName = {this.state.name}></SurfboardList>
-                        </Element>
                     </div>
                 </div>
+                <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm>
+                <Element id = "products" className = "container">
+                    <SurfboardList email = {this.state.email} userName = {this.state.name}></SurfboardList>
+                </Element>
             </div> 
         )
     }
@@ -91,7 +109,6 @@ class HomePage extends Component{
                         </div>
                     </div>
                 </div>
-                
             </div>
         )
     }
