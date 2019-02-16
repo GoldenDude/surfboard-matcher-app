@@ -118,7 +118,7 @@ h5{
 
 .loadMore{
     position: relative;
-    background-color: #629bc0;
+    background-color: #17a2b8;
     text-align: center;
     border: none;
     border-radius: 3px;
@@ -133,11 +133,35 @@ h5{
 }
 
 .loadMore:hover{
-    color: #000000;
+    background-color: #138496;
+    border-color:#17a2b8;
     box-shadow: 2px 2px 2px rgba(56, 56, 56, 0.2);
     cursor: pointer;
 }
 
+.form-control{
+    width: 40%;
+}
+
+.wrapperStyle{
+    width: 474px;
+    margin: 5px 0 0 5px;
+}
+
+.formContainer{
+    position: absolute;
+    top: 1205px;
+    left: 350px;
+}
+
+.btn-info{
+    margin-top: 18px;
+}
+
 .matchForm{
-    
+    margin-top: 150px;
+}
+
+.clear{
+    clear: both;
 }

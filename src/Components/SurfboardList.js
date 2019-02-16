@@ -7,6 +7,7 @@ class SurfboardList extends Component{
         super(props);
         
         this.state = {
+            products: this.props.products,
             allSurfboards: [],
             shownSurfboards: [],
             email: this.props.email,
@@ -14,32 +15,62 @@ class SurfboardList extends Component{
             shown: 8
         }
 
-        this.add           = this.add.bind(this);
-        this.nextID        = this.nextID.bind(this);
-        this.eachSurfboard = this.eachSurfboard.bind(this);
-        this.addToFav      = this.addToFav.bind(this);
-        this.removeFromFav = this.removeFromFav.bind(this);
-        this.loadMore      = this.loadMore.bind(this);
+        this.add                = this.add.bind(this);
+        this.nextID             = this.nextID.bind(this);
+        this.eachSurfboard      = this.eachSurfboard.bind(this);
+        this.addToFav           = this.addToFav.bind(this);
+        this.removeFromFav      = this.removeFromFav.bind(this);
+        this.loadMore           = this.loadMore.bind(this);
+        this.renderProducts     = this.renderProducts.bind(this);
+        this.renderMatched      = this.renderMatched.bind(this);
     }
 
     componentDidMount(){
-        var self = this;
-        const url = 'https://surfboard-matcher.herokuapp.com/getAllSurfboards';
+        let self = this;
+        const getAllUrl = 'https://surfboard-matcher.herokuapp.com/getAllSurfboards';
+        const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.state.email}`;
+        let favList;
 
-        fetch(url)
-        .then(res => res.json())
-            .then(json => {
-                json.map((surfboard, i) => {
-                    self.add({id: surfboard._id, brand: surfboard.brand, userMinWeight: surfboard.userMinWeight, userMaxWeight: surfboard.userMaxWeight,
-                              width: surfboard.width, thickness: surfboard.thickness, height: surfboard.height, maxSwell: surfboard.maxSwell, i: i});
-                    return 0;
-                });
-                
+        if(self.state.products){
+            fetch(getAllUrl)
+            .then(res => res.json())
+                .then(async json => {
+                    await fetch(getHistoryUrl).then(res => res.json()).then(json => favList = json);
+                    let matched = 0;
+
+                    json.map((surfboard, i) => {
+                        let favorite = false;
+
+                        if(matched < favList.length){
+                            for(let j = 0; j < favList.length; ++j){
+                                if(surfboard._id === favList[j]._id){
+                                    favorite = true;
+                                    ++matched;
+                                    break;
+                                }
+                            }
+                        }
+
+                        self.add({id: surfboard._id, brand: surfboard.brand, userMinWeight: surfboard.userMinWeight, userMaxWeight: surfboard.userMaxWeight,
+                                width: surfboard.width, thickness: surfboard.thickness, height: surfboard.height, maxSwell: surfboard.maxSwell, favorite: favorite ,i: i});
+                        return 0;
+                    });
+                    
+                })
+            .catch(err => console.log(err));
+        }
+
+        else{
+            let surfboard = this.props.children;
+            surfboard.map(surfboard => {
+                self.add({id: surfboard._id, brand: surfboard.brand, userMinWeight: surfboard.userMinWeight, userMaxWeight: surfboard.userMaxWeight,
+                    width: surfboard.width, thickness: surfboard.thickness, height: surfboard.height, maxSwell: surfboard.maxSwell, favorite: surfboard.favorite});
+                    return null;
             })
-        .catch(err => console.log(err));
+        }
     }
 
-    add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, i = 0}){
+    add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false ,i = 0}){
         this.setState(prevState => ({
             allSurfboards: [
                 ...prevState.allSurfboards, {
@@ -50,7 +81,8 @@ class SurfboardList extends Component{
                     width: width,
                     thickness: thickness,
                     height: height,
-                    maxSwell: maxSwell
+                    maxSwell: maxSwell,
+                    favorite: favorite
                 }
             ]
         }))
@@ -67,7 +99,7 @@ class SurfboardList extends Component{
                         thickness: thickness,
                         height: height,
                         maxSwell: maxSwell,
-                        favorite: false
+                        favorite: favorite
                     }
                 ]
             }))
@@ -98,7 +130,7 @@ class SurfboardList extends Component{
         )
     }
 
-    async loadMore(){
+    loadMore(){
         let self = this;
         let oldShown = self.state.shown;
 
@@ -137,7 +169,7 @@ class SurfboardList extends Component{
                     thickness: surfboard.thickness,
                     height: surfboard.height,
                     maxSwell: surfboard.maxSwell,
-                    favorite: false
+                    favorite: surfboard.favorite
                 }
             ]
         }))
@@ -206,16 +238,29 @@ class SurfboardList extends Component{
         .catch(err => console.log(err));
     }
 
-    render(){
-
-        document.body.style.height = (this.state.shown / 4) * 720 + 50 + "px";
-
+    /* at least 2 rows of surfboards */
+    renderProducts(){
+        document.body.style.height = (this.state.shown / 4) * 720 * 2 + 50 + "px";
         return(
             <div className = 'surfboardList'>
                 {this.state.shownSurfboards.map(this.eachSurfboard)}
                 <button className = "loadMore" onClick = {this.loadMore}>Show More!</button>
             </div>
         )
+    }
+
+    /* height = 720 */
+    renderMatched(){
+        return(
+            <div className = 'surfboardList'>
+                {this.state.shownSurfboards.map(this.eachSurfboard)}
+                <button className = "loadMore" onClick = {this.loadMore}>Show More!</button>
+            </div>
+        )
+    }
+
+    render(){
+        return this.state.products ? this.renderProducts() : this.renderMatched();
     }
 }
 

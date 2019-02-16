@@ -17,9 +17,9 @@ class HomePage extends Component{
         
         this.state = {
             admin: false,
-            logged: false,
+            logged: true,
             name: null,
-            email: null,
+            email: "edanazran@gmail.com",
             level: 0,
             weight: 0,
             height: 0,
@@ -77,19 +77,26 @@ class HomePage extends Component{
     renderLogged(){
         return (
             <div>
-                <Element id = "top"/>
-                <div className = "firstBackground">
-                    <div className = "container">
-                        <div className = "Welcome">
-                            <img src = {logo} alt = "Logo" className = "Logo"/>
+                <div>
+                    <Element id = "top"/>
+                    <div className = "firstBackground">
+                        <div className = "container">
+                            <div className = "Welcome">
+                                <img src = {logo} alt = "Logo" className = "Logo"/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm>
-                <Element id = "products" className = "container">
-                    <SurfboardList email = {this.state.email} userName = {this.state.name}></SurfboardList>
-                </Element>
-            </div> 
+                    <Element id = "formLocation">
+                        <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm>
+                    </Element>
+
+                    <Element id = "products" className = "container">
+                        <SurfboardList email = {this.state.email} userName = {this.state.name} products = {true}></SurfboardList>
+                    </Element>
+                    
+                <div className = "clear"/>
+                </div> 
+            </div>
         )
     }
 
@@ -112,7 +119,6 @@ class HomePage extends Component{
             </div>
         )
     }
-
 
     render(){
         return this.state.logged ? this.renderLogged() : this.renderLoggedOut();
