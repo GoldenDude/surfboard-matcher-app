@@ -83,7 +83,12 @@ html, body, #root {
     width: 290px;
 }
 
-.surfboardList{
+#products > div > .surfboardList{
+    position: relative;
+    top: 130px;
+}
+
+.container > .surfboardList{
     position: relative;
     top: 35px;
 }
@@ -231,4 +236,9 @@ h5{
 
 .secondLabel{
     margin: 3px 13px;
+}
+
+.productPic{
+    position: relative;
+    top: 155px;
 }

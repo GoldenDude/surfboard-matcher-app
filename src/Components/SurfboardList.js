@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Surfboard from './Surfboard';
 import SurfboardPic from '../surfboard.png';
-import ProductsPic from '../products2.png';
 
 class SurfboardList extends Component{
     constructor(props){
