@@ -36,10 +36,10 @@ class MatchForm extends Component {
 
     renderSent() {      
         return (
-            <div className = "matchForm ">
+            <div className = "matchForm">
                 {this.renderDefault()}
                 <div className = "container">
-                    <SurfboardList className = "surfboardList2" email = {this.state.email} userName = {this.state.name} products = {false} key = {1}>
+                    <SurfboardList email = {this.state.email} userName = {this.state.name} products = {false} key = {1}>
                         {this.state.result}
                     </SurfboardList>
                 </div>

@@ -150,7 +150,7 @@ h5{
 }
 
 .form-control{
-    width: 40%;
+    width: 100%;
 }
 
 .wrapperStyle{
@@ -159,9 +159,10 @@ h5{
 }
 
 .formContainer{
-    position: absolute;
-    top: 1147px;
-    left: 350px;
+    position: relative;
+    /* top: 1147px; */
+    /* left: 350px; */
+    width: 480px;
 }
 
 .btn-info{
@@ -221,7 +222,11 @@ h5{
     -ms-transition: all .4s ease;
     transition: all .4s ease;
   }
-  
+
+  .rc-slider{
+      width: 94%;
+  }
+
   #first_toggle:checked ~ .toggle_option_slider{
     background: rgba(23,162,184,.3);
     left: 3px;

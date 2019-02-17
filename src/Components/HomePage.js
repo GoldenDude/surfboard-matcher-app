@@ -92,7 +92,7 @@ class HomePage extends Component{
                     </Element>
                     <img src = {ProductsPic} className = "productPic" alt = "products"/>
                     <Element id = "products" className = "container">
-                        <SurfboardList className = "surfboardList1" email = {this.state.email} userName = {this.state.name} products = {true}></SurfboardList>
+                        <SurfboardList email = {this.state.email} userName = {this.state.name} products = {true}></SurfboardList>
                     </Element>
                     
                 <div className = "clear"/>
