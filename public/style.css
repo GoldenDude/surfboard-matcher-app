@@ -21,6 +21,7 @@ html, body, #root {
 
 .firstBackground{
     display: block;
+    width: 100%;
     background-repeat: no-repeat;
     background-image: url('./images/Wave.png');
     height: 670px;
@@ -241,4 +242,9 @@ h5{
 .productPic{
     position: relative;
     top: 155px;
+    width: 100%;
+}
+
+.matchForm > img{
+    width: 100%;
 }
