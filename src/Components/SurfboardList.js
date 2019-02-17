@@ -40,8 +40,11 @@ class SurfboardList extends Component{
 
                     json.map((surfboard, i) => {
                         let favorite = false;
-
-                        if(matched < favList.length){
+/*
+    Checking if the user's surfboards history appear in the record of all surfboards 
+    to indicate in the record of all surfboards the surfboards that are in the user's favorites.
+*/
+                        if(matched < favList.length){ // if favList is empty 
                             for(let j = 0; j < favList.length; ++j){
                                 if(surfboard._id === favList[j]._id){
                                     favorite = true;
