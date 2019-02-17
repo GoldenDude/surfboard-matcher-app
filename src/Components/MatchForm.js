@@ -121,7 +121,9 @@ class MatchForm extends Component {
 
         fetch(getMatchedUrl).then(res => res.json()).then(async json => {
             await fetch(getHistoryUrl).then(res => res.json()).then(json => favList = json);
-            for(let i = 0; i < 4; ++i){
+            let size = json.length < 4 ? json.length : 4;
+            console.log(size);
+            for(let i = 0; i < size; ++i){
                 let favorite = false;
 
                 for(let j = 0; j < favList.length; ++j){
@@ -135,7 +137,10 @@ class MatchForm extends Component {
             }
             self.setState({sent: true});
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            alert("Bad Input");
+            console.log(err);
+        });
     }
 
     add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false}){
