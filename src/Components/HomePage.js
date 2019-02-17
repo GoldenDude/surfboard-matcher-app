@@ -3,6 +3,7 @@ import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
 import {Element} from 'react-scroll';
 import logo from '../logo.png';
+import ProductsPic from '../products3.jpg';
 import MatchForm from './MatchForm';
 
 
@@ -89,7 +90,7 @@ class HomePage extends Component{
                     <Element id = "formLocation">
                         <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm>
                     </Element>
-
+                    <img src = {ProductsPic} alt = "products"/>
                     <Element id = "products" className = "container">
                         <SurfboardList email = {this.state.email} userName = {this.state.name} products = {true}></SurfboardList>
                     </Element>

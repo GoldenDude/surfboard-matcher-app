@@ -19,7 +19,7 @@ class Header extends Component{
                         Find a Match!
                     </Link>
 
-                    <Link href = "#" to = "products" smooth = {true} offset = {60} duration = {500} className = "navLink nav-item">
+                    <Link href = "#" to = "products" smooth = {true} offset = {-550} duration = {500} className = "navLink nav-item">
                         Our Products
                     </Link>
 

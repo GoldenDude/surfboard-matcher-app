@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Surfboard from './Surfboard';
-import SurfboardPic from '../surfboard.png'
+import SurfboardPic from '../surfboard.png';
+import ProductsPic from '../products2.png';
 
 class SurfboardList extends Component{
     constructor(props){
@@ -242,9 +243,11 @@ class SurfboardList extends Component{
     renderProducts(){
         document.body.style.height = (this.state.shown / 4) * 720 * 2 + 50 + "px";
         return(
-            <div className = 'surfboardList'>
-                {this.state.shownSurfboards.map(this.eachSurfboard)}
-                <button className = "loadMore" onClick = {this.loadMore}>Show More!</button>
+            <div>
+                <div className = 'surfboardList'>
+                    {this.state.shownSurfboards.map(this.eachSurfboard)}
+                    <button className = "loadMore" onClick = {this.loadMore}>Show More!</button>
+                </div>
             </div>
         )
     }
@@ -254,7 +257,6 @@ class SurfboardList extends Component{
         return(
             <div className = 'surfboardList'>
                 {this.state.shownSurfboards.map(this.eachSurfboard)}
-                <button className = "loadMore" onClick = {this.loadMore}>Show More!</button>
             </div>
         )
     }

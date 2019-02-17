@@ -11,15 +11,15 @@ const Handle = Slider.Handle;
 class MatchForm extends Component {
     constructor(props) {
         super(props);
-
+        this.name       = null;
+        this.level      = 0;
+        this.weight     = 0;
+        this.height     = 0;
+        this.location   = 4219;
+        this.email      = "edanazran@gmail.com";
+        
         this.state = {
             result: [],
-            email: "edanazran@gmail.com",
-            name: null,
-            level: 0,
-            weight: 0,
-            height: 0,
-            location: 0,
             sent: false
         }
 
@@ -31,15 +31,18 @@ class MatchForm extends Component {
         this.getMatched     = this.getMatched.bind(this);
         this.add            = this.add.bind(this);
         this.nextID         = this.nextID.bind(this);
+        this.handleLocation = this.handleLocation.bind(this);
     }
 
     renderSent() {      
         return (
-            <div className = "matchForm">
+            <div className = "matchForm ">
                 {this.renderDefault()}
-                <SurfboardList email = {this.state.email} userName = {this.state.name} products = {false} key = {1}>
-                    {this.state.result}
-                </SurfboardList>
+                <div className = "container">
+                    <SurfboardList email = {this.state.email} userName = {this.state.name} products = {false} key = {1}>
+                        {this.state.result}
+                    </SurfboardList>
+                </div>
             </div>
         )
     }
@@ -59,7 +62,7 @@ class MatchForm extends Component {
             </Tooltip>
         );
     }
-
+    
     renderDefault() {
         let self = this;
         return (
@@ -71,13 +74,27 @@ class MatchForm extends Component {
                     <form onSubmit = {self.getMatched}>
                         <div className = "form-group">
                             <label name = "height">Height</label>
-                            <input required type = "name" className = "form-control" id = "Name" placeholder = "Enter Height in Centimeters..." onChange = {self.handleHeight}/>
+                            <input required type = "name" className = "form-control" id = "Name" placeholder = "Height in Centimeters" onChange = {self.handleHeight}/>
                         </div>
                         <div className="form-group">
                             <label name = "weight">Weight</label>
-                            <input required className="form-control" id = "weight" placeholder = "Enter Weight in Kilograms..." onChange = {self.handleWeight}/>
+                            <input required className="form-control" id = "weight" placeholder = "Weight in Kilograms" onChange = {self.handleWeight}/>
                         </div>
-                        
+
+                        <div className="form-group">
+                            <label name = "weight">Location</label>
+                            <div className = "wrapper">
+                                <div className = "toggle_radio">
+                                    <input type = "radio" checked  className = "toggle_option" 
+                                            id = "first_toggle" name = "toggle_option" value = {4219} onChange = {self.handleLocation}/>
+                                    <input type = "radio" className = "toggle_option" 
+                                            id = "second_toggle" name = "toggle_option" value = {194} onChange = {self.handleLocation}/>
+                                    <label className = "firstLabel" htmlFor = "first_toggle"><p>Ashdod, Israel</p></label>
+                                    <label className = "secondLabel" htmlFor = "second_toggle"><p>Nazaré, Portugal</p></label>
+                                    <div className = "toggle_option_slider"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div className = "form-group">
                             <label name = "Inputselect">Your Level</label>
                             <div className = "wrapperStyle">
@@ -95,10 +112,12 @@ class MatchForm extends Component {
         event.preventDefault();
         let self = this;
         let level = document.body.getElementsByClassName("rc-slider-handle")[0].getAttribute("aria-valuenow");
-        const getMatchedUrl = `https://surfboard-matcher.herokuapp.com/matchSurfboard?height=${self.state.height}&weight=${self.state.weight}&level=${self.state.level}&location=4219`;
-        self.setState({level: level, result: [], sent: false});
+        self.level = level; 
+        const getMatchedUrl = `https://surfboard-matcher.herokuapp.com/matchSurfboard?height=${self.height}&weight=${self.weight}&level=${self.level}&location=${self.location}`;
+        
+        self.setState({result: [], sent: false});
         let favList;
-        const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.state.email}`;
+        const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.email}`;
 
         fetch(getMatchedUrl).then(res => res.json()).then(async json => {
             await fetch(getHistoryUrl).then(res => res.json()).then(json => favList = json);
@@ -138,16 +157,16 @@ class MatchForm extends Component {
         }))
     }
 
+    handleLocation(event){
+        this.location = event.target.value;
+    }
+
     handleHeight(event){
-        this.setState({
-            height: event.target.value
-        })
+        this.height = event.target.value;
     }
     
     handleWeight(event){
-        this.setState({
-            weight: event.target.value
-        })
+        this.weight = event.target.value;
     }
     
     nextID(surfboards = []){
