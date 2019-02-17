@@ -4,7 +4,7 @@ import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import SurfboardList from "./SurfboardList";
-import findAMatch from "../FindAMatch.png";
+import findAMatch from "../About us.jpg";
 
 const Handle = Slider.Handle;
 
