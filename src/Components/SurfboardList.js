@@ -242,7 +242,7 @@ class SurfboardList extends Component{
 
     /* at least 2 rows of surfboards */
     renderProducts(){
-        document.body.style.height = (this.state.shown / 4) * 720 * 2 + 50 + "px";
+        document.body.style.height = (this.state.shown / 4) * 720 + 2050 + "px";
         return(
             <div>
                 <div className = 'surfboardList'>

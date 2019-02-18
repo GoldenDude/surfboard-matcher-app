@@ -271,3 +271,17 @@ h5{
 .submitButton:hover{
     background-color: #00b0ff;
 }
+
+.warning{
+    color: white;
+    background: #b33a3a;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.warningText{
+    font-size: 14px;
+    font-weight: normal;
+}
