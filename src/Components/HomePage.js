@@ -98,9 +98,9 @@ class HomePage extends Component{
                     <Element id = "liveCams">
                         <div className = "iframeContainer">
                             <img className = "spotsPic" src = {SurfingSpots} alt = "spots"/>
-                            <iframe width="615" height="450" src="https://www.youtube.com/embed/n_e-kzztGIU"
+                            <iframe src="https://www.youtube.com/embed/n_e-kzztGIU"
                                 frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Nazare" allowFullScreen/>
-                            <iframe width="615" height="450" src="https://www.youtube.com/embed/ArBfFABUDWA" 
+                            <iframe src="https://www.youtube.com/embed/ArBfFABUDWA" 
                                 frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Ashdod" allowFullScreen/>
                         </div>
                     </Element>
