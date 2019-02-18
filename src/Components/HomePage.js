@@ -15,15 +15,14 @@ class HomePage extends Component{
         this.renderLoggedOut     = this.renderLoggedOut.bind(this);
         this.responseGoogle      = this.responseGoogle.bind(this);
         this.failedToConnect     = this.failedToConnect.bind(this);
+        this.name   = null;
+        this.email  = null;
+        this.level  = 0;
+        this.weight = 0;
+        this.height = 0;
         
         this.state = {
-            admin: false,
-            logged: true,
-            name: null,
-            email: "edanazran@gmail.com",
-            level: 0,
-            weight: 0,
-            height: 0,
+            logged: false,
         }
     }
 
@@ -61,11 +60,17 @@ class HomePage extends Component{
                         })
                         .catch(err => console.log(err));
                 }
-                else console.log("User Already Exists");
+                else {
+                    console.log("User Already Exists ");
+                    this.weight = json.weight;
+                    this.height = json.height;
+                    this.level  = json.level;
+                };
+
+                this.email = profile.email;
+                this.name  = profile.name;
                 this.setState({
-                    logged: true,
-                    email: profile.email,
-                    name: profile.name,
+                    logged: true
                 });
             })
             .catch(err => console.log(err));
@@ -88,11 +93,14 @@ class HomePage extends Component{
                         </div>
                     </div>
                     <Element id = "formLocation">
-                        <MatchForm email = {this.state.email} name = {this.state.name}></MatchForm>
+                        <MatchForm email = {this.email} name = {this.name} 
+                                   level = {this.level} weight = {this.weight}
+                                   height = {this.height}
+                        />
                     </Element>
                     <img src = {ProductsPic} className = "productPic" alt = "products"/>
                     <Element id = "products" className = "container">
-                        <SurfboardList email = {this.state.email} userName = {this.state.name} products = {true}></SurfboardList>
+                        <SurfboardList email = {this.email} userName = {this.name} products = {true}/>
                     </Element>
                     
                 <div className = "clear"/>

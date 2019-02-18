@@ -12,11 +12,11 @@ class MatchForm extends Component {
     constructor(props) {
         super(props);
         this.name       = null;
-        this.level      = 0;
-        this.weight     = 0;
-        this.height     = 0;
-        this.location   = 4219;
+        this.level      = this.props.level;
+        this.weight     = this.props.weight;
+        this.height     = this.props.height;
         this.email      = this.props.email;
+        this.location   = 4219;
         
         this.state = {
             result: [],
@@ -32,6 +32,7 @@ class MatchForm extends Component {
         this.add            = this.add.bind(this);
         this.nextID         = this.nextID.bind(this);
         this.handleLocation = this.handleLocation.bind(this);
+        this.updateUserInfo = this.updateUserInfo.bind(this);
     }
 
     renderSent() {      
@@ -74,11 +75,11 @@ class MatchForm extends Component {
                     <form onSubmit = {self.getMatched}>
                         <div className = "form-group">
                             <label name = "height">Height</label>
-                            <input required type = "name" className = "form-control" id = "Name" placeholder = "Height in Centimeters" onChange = {self.handleHeight}/>
+                            <input required type = "name" className = "form-control" id = "Name" defaultValue = {this.height} onChange = {self.handleHeight}/>
                         </div>
                         <div className="form-group">
                             <label name = "weight">Weight</label>
-                            <input required className="form-control" id = "weight" placeholder = "Weight in Kilograms" onChange = {self.handleWeight}/>
+                            <input required className="form-control" id = "weight" defaultValue = {this.weight} onChange = {self.handleWeight}/>
                         </div>
 
                         <div className="form-group">
@@ -98,7 +99,7 @@ class MatchForm extends Component {
                         <div className = "form-group">
                             <label name = "Inputselect">Your Level</label>
                             <div className = "wrapperStyle">
-                                <Slider className = "level" min = {0} max = {10} defaultValue = {1} handle = {self.handle}/>
+                                <Slider className = "level" min = {0} max = {10} defaultValue = {this.level} handle = {self.handle}/>
                             </div>
                         </div>
                         <button type = "submit" className = "btn btn-info">Submit Information</button>
@@ -146,6 +147,25 @@ class MatchForm extends Component {
             alert("Bad Input");
             console.log(err);
         });
+
+        this.updateUserInfo();
+    }
+
+    updateUserInfo(){
+        const updateUrl = `https://surfboard-matcher.herokuapp.com/updateUser?email=${this.email}&height=${this.height}&weight=${this.weight}&level=${this.level}`;
+
+        fetch(updateUrl, {
+            'method': "PUT",
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(res => res.json())
+            .then(json => {
+                if(json.result === 'Failure'){
+                    console.log("Unable to update User's Info");
+                }
+            })
+        .catch(err => console.log(err));
     }
 
     add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false}){
