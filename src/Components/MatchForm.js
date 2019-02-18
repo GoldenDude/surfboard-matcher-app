@@ -16,7 +16,7 @@ class MatchForm extends Component {
         this.weight     = 0;
         this.height     = 0;
         this.location   = 4219;
-        this.email      = "edanazran@gmail.com";
+        this.email      = this.props.email;
         
         this.state = {
             result: [],
@@ -39,7 +39,7 @@ class MatchForm extends Component {
             <div className = "matchForm">
                 {this.renderDefault()}
                 <div className = "container">
-                    <SurfboardList email = {this.state.email} userName = {this.state.name} products = {false} key = {1}>
+                    <SurfboardList email = {this.email} userName = {this.name} products = {false} key = {1}>
                         {this.state.result}
                     </SurfboardList>
                 </div>

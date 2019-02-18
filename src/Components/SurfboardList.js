@@ -5,13 +5,13 @@ import SurfboardPic from '../surfboard.png';
 class SurfboardList extends Component{
     constructor(props){
         super(props);
-        
+        this.allSurfboards = [];
+        this.email         =  this.props.email;
+        this.name          = this.props.userName;
+
         this.state = {
             products: this.props.products,
-            allSurfboards: [],
             shownSurfboards: [],
-            email: this.props.email,
-            name: this.props.userName,
             shown: 8
         }
 
@@ -28,7 +28,7 @@ class SurfboardList extends Component{
     componentDidMount(){
         let self = this;
         const getAllUrl = 'https://surfboard-matcher.herokuapp.com/getAllSurfboards';
-        const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.state.email}`;
+        const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.email}`;
         let favList;
 
         if(self.state.products){
@@ -65,30 +65,28 @@ class SurfboardList extends Component{
 
         else{
             let surfboard = this.props.children;
+            console.log(surfboard[0])
             surfboard.map(surfboard => {
-                self.add({id: surfboard._id, brand: surfboard.brand, userMinWeight: surfboard.userMinWeight, userMaxWeight: surfboard.userMaxWeight,
+                self.add({id: surfboard.id, brand: surfboard.brand, userMinWeight: surfboard.userMinWeight, userMaxWeight: surfboard.userMaxWeight,
                     width: surfboard.width, thickness: surfboard.thickness, height: surfboard.height, maxSwell: surfboard.maxSwell, favorite: surfboard.favorite});
-                    return null;
+                    return 0;
             })
         }
     }
 
     add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false ,i = 0}){
-        this.setState(prevState => ({
-            allSurfboards: [
-                ...prevState.allSurfboards, {
-                    id: id !== null ? id : this.nextID(prevState.allSurfboards),
-                    brand: brand,
-                    userMinWeight: userMinWeight,
-                    userMaxWeight: userMaxWeight,
-                    width: width,
-                    thickness: thickness,
-                    height: height,
-                    maxSwell: maxSwell,
-                    favorite: favorite
-                }
-            ]
-        }))
+        
+        this.allSurfboards.push({
+            id: id !== null ? id : this.nextID(this.allSurfboards),
+            brand: brand,
+            userMinWeight: userMinWeight,
+            userMaxWeight: userMaxWeight,
+            width: width,
+            thickness: thickness,
+            height: height,
+            maxSwell: maxSwell,
+            favorite: favorite
+        })
 
         if(i < this.state.shown){
             this.setState(prevState => ({
@@ -137,8 +135,8 @@ class SurfboardList extends Component{
         let self = this;
         let oldShown = self.state.shown;
 
-        if(oldShown >= self.state.allSurfboards.length){
-            oldShown = self.state.allSurfboards.length;
+        if(oldShown >= self.allSurfboards.length){
+            oldShown = self.allSurfboards.length;
             document.body.getElementsByClassName("loadMore")[0].style.display = "none";
             return;
         }
@@ -149,11 +147,11 @@ class SurfboardList extends Component{
         self.setState({shown: newShown});
 
         for(oldShown; oldShown < newShown; ++oldShown){
-            surfboard = self.state.allSurfboards[oldShown];
+            surfboard = self.allSurfboards[oldShown];
             this.addToShown(surfboard);
         }  
 
-        if(newShown >= self.state.allSurfboards.length){
+        if(newShown >= self.allSurfboards.length){
             document.body.getElementsByClassName("loadMore")[0].style.display = "none";
         }
 
@@ -201,7 +199,7 @@ class SurfboardList extends Component{
                 height:         surfboardToAdd.height,
                 maxSwell:       surfboardToAdd.maxSwell 
             },
-            email: this.state.email
+            email: this.email
         }
 
         if(surfboardToAdd){
@@ -224,7 +222,8 @@ class SurfboardList extends Component{
     }
 
     removeFromFav(index, surfboard){
-        const url = `https://surfboard-matcher.herokuapp.com/deleteFromHistory?_id=${index}&email=${this.state.email}`;
+        console.log(index);
+        const url = `https://surfboard-matcher.herokuapp.com/deleteFromHistory?_id=${index}&email=${this.email}`;
 
         fetch(url, {
             method: 'DELETE',
