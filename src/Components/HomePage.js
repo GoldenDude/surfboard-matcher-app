@@ -94,7 +94,7 @@ class HomePage extends Component{
                             </div>
                         </div>
                     </div>
-                    <img src = {SurfingSpots} alt = "spots"/>
+                    <img className = "spotsPic" src = {SurfingSpots} alt = "spots"/>
                     <div className = "iframeContainer">
                         <iframe width="650" height="450" src="https://www.youtube.com/embed/n_e-kzztGIU"
                             frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Nazare" allowFullScreen/>

@@ -295,3 +295,10 @@ h5{
     position: relative;
     left: 312px;
 }
+
+.spotsPic{
+    width: 100%;
+    position: relative;
+    left: 290px;
+    top: 20px;
+}
