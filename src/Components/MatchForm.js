@@ -12,8 +12,7 @@ const Handle = Slider.Handle;
 const socket = openSocket('https://surfboard-matcher.herokuapp.com');
 socket.emit('connected');
 socket.on('conditions', data => {
-    console.log(data.location1 + " " + data.location2);
-    console.log(data.location1+data.location2);
+    console.log("Nazare': " + data.location1 + " Ashdod: " + data.location2);
 });
 
 class MatchForm extends Component {
