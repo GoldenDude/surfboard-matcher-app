@@ -308,6 +308,13 @@ h5{
     left: 312px;
 }
 
+.spotsPic{
+    width: 100%;
+    position: relative;
+    left: 290px;
+    top: 20px;
+}
+
 @media(max-width: 1366px) {
     .iframeContainer{
         max-width: 825px;
@@ -335,11 +342,4 @@ h5{
         left: 290px;
         top: 20px;
     }
-}
-
-.spotsPic{
-    width: 100%;
-    position: relative;
-    left: 290px;
-    top: 20px;
 }
