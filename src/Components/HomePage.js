@@ -2,14 +2,9 @@ import React, { Component }  from 'react';
 import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
 import {Element} from 'react-scroll';
-import openSocket from 'socket.io-client';
 import logo from '../logo.png';
 import ProductsPic from '../products4.jpg';
 import MatchForm from './MatchForm';
-
-const socket = openSocket('https://surfboard-matcher.herokuapp.com');
-socket.emit('test', 'test?');
-socket.on('broadcast', data => console.log(data));
 
 class HomePage extends Component{
     constructor(props){

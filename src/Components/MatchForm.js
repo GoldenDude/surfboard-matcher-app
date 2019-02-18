@@ -1,12 +1,20 @@
-import React, { Component } from "react";
-import Slider from 'rc-slider';
-import Tooltip from 'rc-tooltip';
-import 'rc-slider/assets/index.css';
-import 'rc-tooltip/assets/bootstrap.css';
-import SurfboardList from "./SurfboardList";
-import findAMatch from "../findAMatch.jpg";
+import React, { Component } from 'react';
+import Slider               from 'rc-slider';
+import Tooltip              from 'rc-tooltip';
+import                      'rc-slider/assets/index.css';
+import                      'rc-tooltip/assets/bootstrap.css';
+import SurfboardList        from './SurfboardList';
+import findAMatch           from '../findAMatch.jpg';
+import openSocket           from 'socket.io-client';
 
 const Handle = Slider.Handle;
+
+const socket = openSocket('https://surfboard-matcher.herokuapp.com');
+socket.emit('connected');
+socket.on('conditions', data => {
+    console.log(data.location1 + " " + data.location2);
+    console.log(data.location1+data.location2);
+});
 
 class MatchForm extends Component {
     constructor(props) {
