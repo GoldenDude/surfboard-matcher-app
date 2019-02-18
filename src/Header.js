@@ -15,7 +15,7 @@ class Header extends Component{
                         Home
                     </Link>
 
-                    <Link href = "#" to = "products" smooth = {true} offset = {20} duration = {500} className = "navLink nav-item">
+                    <Link href = "#" to = "liveCams" smooth = {true} offset = {-50} duration = {500} className = "navLink nav-item">
                         Surfing Spots
                     </Link>
 

@@ -6,6 +6,7 @@ import ProductsPic from '../products4.jpg';
 import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
 import SurfingSpots from '../surfingSpots.png';
+import { element } from 'prop-types';
 
 class HomePage extends Component{
     constructor(props){
@@ -94,13 +95,16 @@ class HomePage extends Component{
                             </div>
                         </div>
                     </div>
-                    <img className = "spotsPic" src = {SurfingSpots} alt = "spots"/>
-                    <div className = "iframeContainer">
-                        <iframe width="650" height="450" src="https://www.youtube.com/embed/n_e-kzztGIU"
-                            frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Nazare" allowFullScreen/>
-                        <iframe width="650" height="450" src="https://www.youtube.com/embed/ArBfFABUDWA" 
-                            frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Ashdod" allowFullScreen/>
-                    </div>
+                    <Element id = "liveCams">
+                        <div className = "iframeContainer">
+                            <img className = "spotsPic" src = {SurfingSpots} alt = "spots"/>
+                            <iframe width="615" height="450" src="https://www.youtube.com/embed/n_e-kzztGIU"
+                                frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Nazare" allowFullScreen/>
+                            <iframe width="615" height="450" src="https://www.youtube.com/embed/ArBfFABUDWA" 
+                                frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Ashdod" allowFullScreen/>
+                        </div>
+                    </Element>
+                    
                     <Element id = "formLocation">
                         <MatchForm email = {this.email} name = {this.name} 
                                    level = {this.level} weight = {this.weight}

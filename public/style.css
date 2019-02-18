@@ -286,12 +286,20 @@ h5{
     font-weight: normal;
 }
 
-.iframeContainer > iframe:nth-child(1){
+.iframeContainer{
+    max-width: 1230px;
+    min-height: 550px;
+    margin-bottom: 50px;
+}
+
+.iframeContainer > iframe:nth-child(2){
+    float: left;
     position: relative;
     left: 295px;
 }
 
-.iframeContainer > iframe:nth-child(2){
+.iframeContainer > iframe:nth-child(3){
+    float: left;
     position: relative;
     left: 312px;
 }
