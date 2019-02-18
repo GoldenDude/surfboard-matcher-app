@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom';
 import Header from '../Header';
 import HomePage from '../Components/HomePage';
 
-const path = window.location.pathname === "/Profile" ? "/" : window.location.pathname;
+const path = window.location.pathname;
 
 const ReactRouter = () => {
     return (

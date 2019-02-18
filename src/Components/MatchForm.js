@@ -99,7 +99,7 @@ class MatchForm extends Component {
                         <div className = "form-group">
                             <label name = "Inputselect">Your Level</label>
                             <div className = "wrapperStyle">
-                                <Slider className = "level" min = {0} max = {10} defaultValue = {this.level} handle = {self.handle}/>
+                                <Slider className = "level" min = {0} max = {10} defaultValue = {parseInt(this.level)} handle = {self.handle}/>
                             </div>
                         </div>
                         <button type = "submit" className = "btn btn-info">Submit Information</button>
@@ -123,12 +123,10 @@ class MatchForm extends Component {
         fetch(getMatchedUrl).then(res => res.json()).then(async json => {
             await fetch(getHistoryUrl).then(res => res.json()).then(json => favList = json);
             let size = json.length < 4 ? json.length : 4;
-            console.log(size);
-
-/*
-    Checking if the user's surfboards history appear in the record of matched surfboards according to parameters in form 
-    to indicate in the record of matched surfboards the surfboards that are in the user's favorites.
-*/
+            /*
+                Checking if the user's surfboards history appear in the record of matched surfboards according to parameters in form 
+                to indicate in the record of matched surfboards the surfboards that are in the user's favorites.
+            */
             for(let i = 0; i < size; ++i){
                 let favorite = false;
 
