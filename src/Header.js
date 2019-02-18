@@ -15,6 +15,10 @@ class Header extends Component{
                         Home
                     </Link>
 
+                    <Link href = "#" to = "products" smooth = {true} offset = {20} duration = {500} className = "navLink nav-item">
+                        Surfing Spots
+                    </Link>
+
                     <Link href = "#" to = "formLocation" smooth = {true} offset = {-95} duration = {500} className = "navLink nav-item">
                         Find a Match!
                     </Link>
@@ -23,9 +27,7 @@ class Header extends Component{
                         Our Products
                     </Link>
 
-                    <Link href = "#" to = "products" smooth = {true} offset = {20} duration = {500} className = "navLink nav-item">
-                        Surfing Locations
-                    </Link>
+                   
                 </div>
             </div>
         );

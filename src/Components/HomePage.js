@@ -93,6 +93,12 @@ class HomePage extends Component{
                             </div>
                         </div>
                     </div>
+                    <div className = "iframeContainer">
+                        <iframe width="650" height="450" src="https://www.youtube.com/embed/n_e-kzztGIU"
+                            frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Nazare" allowFullScreen/>
+                        <iframe width="650" height="450" src="https://www.youtube.com/embed/ArBfFABUDWA" 
+                            frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Ashdod" allowFullScreen/>
+                    </div>
                     <Element id = "formLocation">
                         <MatchForm email = {this.email} name = {this.name} 
                                    level = {this.level} weight = {this.weight}

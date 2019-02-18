@@ -285,3 +285,13 @@ h5{
     font-size: 14px;
     font-weight: normal;
 }
+
+.iframeContainer > iframe:nth-child(1){
+    position: relative;
+    left: 295px;
+}
+
+.iframeContainer > iframe:nth-child(2){
+    position: relative;
+    left: 312px;
+}
