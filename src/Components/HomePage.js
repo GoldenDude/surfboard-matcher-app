@@ -6,7 +6,6 @@ import ProductsPic from '../products4.jpg';
 import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
 import SurfingSpots from '../surfingSpots.png';
-import { element } from 'prop-types';
 
 class HomePage extends Component{
     constructor(props){
