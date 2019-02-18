@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
 import {Link} from 'react-scroll';
 import Matcher from './Matcher.png';
+import React, {Component} from 'react';
 
 class Header extends Component{
     render(){

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import Surfboard from './Surfboard';
+import React, { Component } from 'react';
 import SurfboardPic from '../surfboard.png';
 
 class SurfboardList extends Component{
@@ -17,12 +17,12 @@ class SurfboardList extends Component{
 
         this.add                = this.add.bind(this);
         this.nextID             = this.nextID.bind(this);
-        this.eachSurfboard      = this.eachSurfboard.bind(this);
+        this.loadMore           = this.loadMore.bind(this);
         this.addToFav           = this.addToFav.bind(this);
         this.removeFromFav      = this.removeFromFav.bind(this);
-        this.loadMore           = this.loadMore.bind(this);
-        this.renderProducts     = this.renderProducts.bind(this);
+        this.eachSurfboard      = this.eachSurfboard.bind(this);
         this.renderMatched      = this.renderMatched.bind(this);
+        this.renderProducts     = this.renderProducts.bind(this);
     }
 
     componentDidMount(){
@@ -40,10 +40,10 @@ class SurfboardList extends Component{
 
                     json.map((surfboard, i) => {
                         let favorite = false;
-/*
-    Checking if the user's surfboards history appear in the record of all surfboards 
-    to indicate in the record of all surfboards the surfboards that are in the user's favorites.
-*/
+                        /*
+                            Checking if the user's surfboards history appear in the record of all surfboards 
+                            to indicate in the record of all surfboards the surfboards that are in the user's favorites.
+                        */
                         if(matched < favList.length){ // if favList is empty 
                             for(let j = 0; j < favList.length; ++j){
                                 if(surfboard._id === favList[j]._id){

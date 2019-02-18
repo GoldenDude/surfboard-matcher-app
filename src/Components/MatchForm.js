@@ -1,45 +1,50 @@
 import React, { Component } from 'react';
 import Slider               from 'rc-slider';
 import Tooltip              from 'rc-tooltip';
+import SurfboardList        from './SurfboardList';
+import openSocket           from 'socket.io-client';
+import findAMatch           from '../findAMatch.jpg';
 import                      'rc-slider/assets/index.css';
 import                      'rc-tooltip/assets/bootstrap.css';
-import SurfboardList        from './SurfboardList';
-import findAMatch           from '../findAMatch.jpg';
-import openSocket           from 'socket.io-client';
 
 const Handle = Slider.Handle;
-
-const socket = openSocket('https://surfboard-matcher.herokuapp.com');
-socket.emit('connected');
-socket.on('conditions', data => {
-    console.log("Nazare': " + data.location1 + " Ashdod: " + data.location2);
-});
 
 class MatchForm extends Component {
     constructor(props) {
         super(props);
         this.name       = null;
+        this.location   = 4219;
+        this.email      = this.props.email;
         this.level      = this.props.level;
         this.weight     = this.props.weight;
         this.height     = this.props.height;
-        this.email      = this.props.email;
-        this.location   = 4219;
-        
+        this.socket     = openSocket('https://surfboard-matcher.herokuapp.com');
+
         this.state = {
             result: [],
-            sent: false
+            sent: false,
+            Ashdod: 0,
+            Nazare: 0
         }
 
-        this.renderSent     = this.renderSent.bind(this);
-        this.renderDefault  = this.renderDefault.bind(this);
-        this.handle         = this.handle.bind(this);
-        this.handleHeight   = this.handleHeight.bind(this);
-        this.handleWeight   = this.handleWeight.bind(this);
-        this.getMatched     = this.getMatched.bind(this);
-        this.add            = this.add.bind(this);
-        this.nextID         = this.nextID.bind(this);
-        this.handleLocation = this.handleLocation.bind(this);
-        this.updateUserInfo = this.updateUserInfo.bind(this);
+        this.add                = this.add.bind(this);
+        this.nextID             = this.nextID.bind(this);
+        this.handle             = this.handle.bind(this);
+        this.getMatched         = this.getMatched.bind(this);
+        this.renderSent         = this.renderSent.bind(this);
+        this.handleHeight       = this.handleHeight.bind(this);
+        this.handleWeight       = this.handleWeight.bind(this);
+        this.renderDefault      = this.renderDefault.bind(this);
+        this.handleLocation     = this.handleLocation.bind(this);
+        this.updateUserInfo     = this.updateUserInfo.bind(this);
+        this.handleCondition    = this.handleCondition.bind(this);
+    }
+
+    componentDidMount(props){
+        this.socket.emit('connected');
+        this.socket.on('conditions', data => {
+            this.handleCondition(data.location1, data.location2);
+        });
     }
 
     renderSent() {      
@@ -73,6 +78,26 @@ class MatchForm extends Component {
     
     renderDefault() {
         let self = this;
+        let warning;
+        
+        if(self.state.Ashdod >= 4 || self.state.Nazare >= 4){
+
+            if(self.state.Ashdod >= 4 && self.state.Nazare >= 4){
+                warning = <p className = "warning">Warning! <br/>Due to high sea levels, surfing in <b>Nazaré</b> and <b>Ashdod</b> is 
+                                                   currently dangerous and not recommended for beginners!</p>
+            }
+
+            else if(self.state.Ashdod >= 4){
+                warning = <p className = "warning">Warning! <br/>Due to sea levels, surfing in <b>Ashdod</b> is 
+                                                   currently dangerous and not recommended for beginners!</p>
+            }
+
+                else if(self.state.Nazare >= 4){
+                    warning = <p className = "warning">Warning! <br/>Due to sea levels, surfing in <b>Nazaré</b> is 
+                                                   currently dangerous and not recommended for beginners!</p>
+                }
+        }
+
         return (
             <div className = "matchForm">
                 <img src = {findAMatch} alt = "form"></img>
@@ -102,6 +127,7 @@ class MatchForm extends Component {
                                     <div className = "toggle_option_slider"></div>
                                 </div>
                             </div>
+                            {warning}
                         </div>
                         <div className = "form-group">
                             <label name = "Inputselect">Your Level</label>
@@ -109,7 +135,7 @@ class MatchForm extends Component {
                                 <Slider className = "level" min = {0} max = {10} defaultValue = {parseInt(this.level)} handle = {self.handle}/>
                             </div>
                         </div>
-                        <button type = "submit" className = "btn btn-info">Submit Information</button>
+                        <button type = "submit" className = "btn btn-info submitButton">Submit Information</button>
                     </form>
                 </div>
             </div>  
@@ -204,6 +230,14 @@ class MatchForm extends Component {
         this.weight = event.target.value;
     }
     
+    handleCondition(Nazare, Ashdod){
+        console.log("Nazare': " + Nazare + " Ashdod: " + Ashdod);
+        this.setState({
+            Nazare: Nazare,
+            Ashdod: Ashdod 
+        })
+    }
+
     nextID(surfboards = []){
         let max = surfboards.reduce((prev, curr) => prev.id > curr.id ? prev.id :  curr.id, 0);
         return ++max;

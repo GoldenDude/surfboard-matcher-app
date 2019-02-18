@@ -233,11 +233,13 @@ h5{
   }
 
   #first_toggle:checked ~ .toggle_option_slider{
-    background: rgba(23,162,184,.3);
+    background: #00b0ff;
+    opacity: 0.3;
     left: 3px;
   }
   #second_toggle:checked ~ .toggle_option_slider{
-    background: rgba(23,162,184,.3);
+    background: #00b0ff;
+    opacity: 0.3;
     left: 133px;
   }
 
@@ -257,4 +259,15 @@ h5{
 
 .matchForm > img{
     width: 100%;
+}
+
+.submitButton{
+    position: relative;
+    left: 152px;
+    background-color: #007bff;
+    border: none;
+}
+
+.submitButton:hover{
+    background-color: #00b0ff;
 }

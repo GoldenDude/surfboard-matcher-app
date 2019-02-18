@@ -9,10 +9,10 @@ class Surfboard extends Component{
             favorite: this.props.favorite
         }
 
-        this.renderFavorite = this.renderFavorite.bind(this);
-        this.renderRegular  = this.renderRegular.bind(this);
         this.addToFav       = this.addToFav.bind(this);
+        this.renderRegular  = this.renderRegular.bind(this);
         this.removeFromFav  = this.removeFromFav.bind(this);
+        this.renderFavorite = this.renderFavorite.bind(this);
     }
 
     addToFav(){

@@ -1,19 +1,15 @@
+import logo from '../logo.png';
+import MatchForm from './MatchForm';
+import {Element} from 'react-scroll';
 import React, { Component }  from 'react';
+import ProductsPic from '../products4.jpg';
 import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
-import {Element} from 'react-scroll';
-import logo from '../logo.png';
-import ProductsPic from '../products4.jpg';
-import MatchForm from './MatchForm';
 
 class HomePage extends Component{
     constructor(props){
         super(props);
-        
-        this.renderLogged        = this.renderLogged.bind(this);
-        this.renderLoggedOut     = this.renderLoggedOut.bind(this);
-        this.responseGoogle      = this.responseGoogle.bind(this);
-        this.failedToConnect     = this.failedToConnect.bind(this);
+
         this.name   = null;
         this.email  = null;
         this.level  = 0;
@@ -23,6 +19,11 @@ class HomePage extends Component{
         this.state = {
             logged: false,
         }
+                
+        this.renderLogged        = this.renderLogged.bind(this);
+        this.responseGoogle      = this.responseGoogle.bind(this);
+        this.renderLoggedOut     = this.renderLoggedOut.bind(this);
+        this.failedToConnect     = this.failedToConnect.bind(this);
     }
 
     responseGoogle(response){
