@@ -52,7 +52,7 @@ class MatchForm extends Component {
             <div className = "matchForm">
                 {this.renderDefault()}
                 <div className = "container">
-                    <SurfboardList email = {this.email} userName = {this.name} products = {false} key = {1}>
+                    <SurfboardList email = {this.email} products = {false}>
                         {this.state.result}
                     </SurfboardList>
                 </div>

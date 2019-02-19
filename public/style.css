@@ -365,3 +365,15 @@ h5{
         top: 20px;
     }
 }
+
+.favoritesPic{
+    width: 100%;
+    position: relative;
+    top: 55px;   
+}
+
+.listContainer{
+    position: relative;
+    top: 200px;
+}
+

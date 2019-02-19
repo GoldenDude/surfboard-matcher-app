@@ -7,12 +7,11 @@ class SurfboardList extends Component{
         super(props);
         this.allSurfboards = [];
         this.email         =  this.props.email;
-        this.name          = this.props.userName;
 
         this.state = {
             products: this.props.products,
             shownSurfboards: [],
-            shown: 8
+            shown: this.props.products ? 8 : this.props.children.length
         }
 
         this.add                = this.add.bind(this);
@@ -30,7 +29,6 @@ class SurfboardList extends Component{
         const getAllUrl = 'https://surfboard-matcher.herokuapp.com/getAllSurfboards';
         const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.email}`;
         let favList;
-
         if(self.state.products){
             fetch(getAllUrl)
             .then(res => res.json())
@@ -64,8 +62,8 @@ class SurfboardList extends Component{
         }
 
         else{
+            console.log(this.props.children);
             let surfboard = this.props.children;
-            console.log(surfboard[0])
             surfboard.map(surfboard => {
                 self.add({id: surfboard.id, brand: surfboard.brand, userMinWeight: surfboard.userMinWeight, userMaxWeight: surfboard.userMaxWeight,
                     width: surfboard.width, thickness: surfboard.thickness, height: surfboard.height, maxSwell: surfboard.maxSwell, favorite: surfboard.favorite});

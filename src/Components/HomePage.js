@@ -1,11 +1,13 @@
 import logo from '../logo.png';
 import Header from '../Header';
 import MatchForm from './MatchForm';
+import Favorites from './Favorites';
 import {Element} from 'react-scroll';
 import React, { Component }  from 'react';
 import ProductsPic from '../products4.jpg';
 import SurfboardList from './SurfboardList';
 import GoogleLogin from 'react-google-login';
+import favoritesPic from '../favoritesPic.png';
 import SurfingSpots from '../surfingSpots.png';
 
 class HomePage extends Component{
@@ -103,9 +105,9 @@ class HomePage extends Component{
                     <Element id = "liveCams">
                         <div className = "iframeContainer">
                             <img className = "spotsPic" src = {SurfingSpots} alt = "spots"/>
-                            <iframe src="https://www.youtube.com/embed/gDDg-fO_ESk?autoplay=1"
+                            <iframe src="https://www.youtube.com/embed/gDDg-fO_ESk?autoplay=1&mute=1"
                                 frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Nazare" allowFullScreen/>
-                            <iframe src="https://www.youtube.com/embed/ArBfFABUDWA?autoplay=1" 
+                            <iframe src="https://www.youtube.com/embed/ArBfFABUDWA?autoplay=1&mute=1" 
                                 frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Ashdod" allowFullScreen/>
                         </div>
                     </Element>
@@ -117,11 +119,20 @@ class HomePage extends Component{
                         />
                     </Element>
 
-                    <img src = {ProductsPic} className = "productPic" alt = "products"/>
-                    <Element id = "products" className = "container">
-                        <SurfboardList email = {this.email} userName = {this.name} products = {true}/>
-                    </Element>
+                    <div className = "listContainer">
+                        <img src = {favoritesPic} className = "favoritesPic" alt = "Favorites"></img>
+                        <Element id = "favoriteList">
+                            <Favorites email = {this.email}/>
+                        </Element>
+                    </div>
                     
+                    <div className = "listContainer">
+                        <img src = {ProductsPic} className = "productPic" alt = "products"/>
+                        <Element id = "products" className = "container">
+                            <SurfboardList email = {this.email} products = {true}/>
+                        </Element>
+                    </div>
+
                 <div className = "clear"/>
                 </div> 
             </div>
