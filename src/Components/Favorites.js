@@ -55,8 +55,8 @@ class Favorites extends Component{
     render(){
         return this.state.loaded ? 
         (
-            <div className = "container">
-                <SurfboardList email = {this.email} products = {false}>
+            <div className = "favorites container">
+                <SurfboardList email = {this.email} products = {false}  key = {2}>
                     {this.surfboards}
                 </SurfboardList>
             </div>

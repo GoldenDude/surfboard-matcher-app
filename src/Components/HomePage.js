@@ -119,21 +119,20 @@ class HomePage extends Component{
                         />
                     </Element>
 
+                    <img src = {favoritesPic} className = "favoritesPic" alt = "Favorites"/>
                     <div className = "listContainer">
-                        <img src = {favoritesPic} className = "favoritesPic" alt = "Favorites"></img>
                         <Element id = "favoriteList">
                             <Favorites email = {this.email}/>
                         </Element>
                     </div>
                     
+                    <img src = {ProductsPic} className = "productPic" alt = "products"/>
                     <div className = "listContainer">
-                        <img src = {ProductsPic} className = "productPic" alt = "products"/>
                         <Element id = "products" className = "container">
                             <SurfboardList email = {this.email} products = {true}/>
                         </Element>
                     </div>
 
-                <div className = "clear"/>
                 </div> 
             </div>
         )
