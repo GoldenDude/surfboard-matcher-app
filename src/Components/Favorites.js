@@ -6,18 +6,20 @@ class Favorites extends Component{
     constructor(props){
         super(props);
         
-        this.email = this.props.email;
         this.surfboards = [];
-        
+        this.email = this.props.email;
+        this.socket = this.props.socket;
+
         this.state = {
             loaded: false
         }
 
-        this.add    = this.add.bind(this);
-        this.nextID = this.nextID.bind(this);
+        this.add             = this.add.bind(this);
+        this.nextID          = this.nextID.bind(this);
+        this.handleFavChange = this.handleFavChange.bind(this);
     }
 
-    componentWillMount(){
+    componentDidMount(){
         let self = this;
         const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.email}`;
 
@@ -31,6 +33,14 @@ class Favorites extends Component{
                                 this.setState({loaded: true});
                               })
         .catch(err => console.log(err));
+
+        this.socket.on('favChange', data => {
+            this.handleFavChange(data.email);
+        });
+    }
+
+    handleFavChange(data){
+        console.log(data.email + "\n" + this.email);
     }
 
     add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false}){
@@ -54,17 +64,13 @@ class Favorites extends Component{
 
     render(){
         return this.state.loaded ? 
-        (
             <div className = "favorites container">
-                <SurfboardList email = {this.email} products = {false}  key = {2}>
+                <SurfboardList email = {this.email} products = {false} socket = {this.socket} key = {2}>
                     {this.surfboards}
                 </SurfboardList>
             </div>
-        )
-        
         :   
-        
-        (null)
+        null
             
     }
 }

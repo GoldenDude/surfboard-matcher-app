@@ -267,6 +267,8 @@ h5{
     left: 152px;
     background-color: #007bff;
     border: none;
+    min-width: 159px;
+    min-height: 36px;
 }
 
 .submitButton:hover{
@@ -377,3 +379,10 @@ h5{
     top: 200px;
 }
 
+.formContainer > h2, .formContainer >  h4{
+    text-align: center;
+}
+
+form > article {
+    margin-top: 30px;
+}

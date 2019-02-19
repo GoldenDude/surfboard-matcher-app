@@ -6,6 +6,7 @@ import {Element} from 'react-scroll';
 import React, { Component }  from 'react';
 import ProductsPic from '../products4.jpg';
 import SurfboardList from './SurfboardList';
+import openSocket   from 'socket.io-client';
 import GoogleLogin from 'react-google-login';
 import favoritesPic from '../favoritesPic.png';
 import SurfingSpots from '../surfingSpots.png';
@@ -13,13 +14,13 @@ import SurfingSpots from '../surfingSpots.png';
 class HomePage extends Component{
     constructor(props){
         super(props);
-
         this.name   = null;
         this.email  = null;
         this.pic    = null;
         this.level  = 0;
         this.weight = 0;
         this.height = 0;
+        this.socket     = openSocket('https://surfboard-matcher.herokuapp.com');
         
         this.state = {
             logged: false,
@@ -115,21 +116,21 @@ class HomePage extends Component{
                     <Element id = "formLocation">
                         <MatchForm email = {this.email} name = {this.name} 
                                    level = {this.level} weight = {this.weight}
-                                   height = {this.height}
+                                   height = {this.height} socket = {this.socket}
                         />
                     </Element>
 
                     <img src = {favoritesPic} className = "favoritesPic" alt = "Favorites"/>
                     <div className = "listContainer">
                         <Element id = "favoriteList">
-                            <Favorites email = {this.email}/>
+                            <Favorites email = {this.email} socket = {this.socket}/>
                         </Element>
                     </div>
                     
                     <img src = {ProductsPic} className = "productPic" alt = "products"/>
                     <div className = "listContainer">
                         <Element id = "products" className = "container">
-                            <SurfboardList email = {this.email} products = {true}/>
+                            <SurfboardList email = {this.email} products = {true} socket = {this.socket}/>
                         </Element>
                     </div>
 

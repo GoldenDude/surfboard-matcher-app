@@ -7,6 +7,7 @@ class SurfboardList extends Component{
         super(props);
         this.allSurfboards = [];
         this.email         =  this.props.email;
+        this.socket        = this.props.socket;
 
         this.state = {
             products: this.props.products,
@@ -62,7 +63,6 @@ class SurfboardList extends Component{
         }
 
         else{
-            console.log(this.props.children);
             let surfboard = this.props.children;
             surfboard.map(surfboard => {
                 self.add({id: surfboard.id, brand: surfboard.brand, userMinWeight: surfboard.userMinWeight, userMaxWeight: surfboard.userMaxWeight,
@@ -212,6 +212,7 @@ class SurfboardList extends Component{
                     console.log(JSON.stringify(json));  
                     if(json.result === "Success"){
                         surfboard.setState({favorite: true});
+                        this.socket.emit('favChange');
                     }   
                 })
             .catch(err => console.log(err));
@@ -219,7 +220,6 @@ class SurfboardList extends Component{
     }
 
     removeFromFav(index, surfboard){
-        console.log(index);
         const url = `https://surfboard-matcher.herokuapp.com/deleteFromHistory?_id=${index}&email=${this.email}`;
 
         fetch(url, {

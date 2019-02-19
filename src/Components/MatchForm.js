@@ -18,7 +18,7 @@ class MatchForm extends Component {
         this.level      = this.props.level;
         this.weight     = this.props.weight;
         this.height     = this.props.height;
-        this.socket     = openSocket('https://surfboard-matcher.herokuapp.com');
+        this.socket     = this.props.socket;
 
         this.state = {
             result: [],
@@ -40,7 +40,7 @@ class MatchForm extends Component {
         this.handleCondition    = this.handleCondition.bind(this);
     }
 
-    componentDidMount(props){
+    componentDidMount(){
         this.socket.emit('connected');
         this.socket.on('conditions', data => {
             this.handleCondition(data.location1, data.location2);
@@ -52,7 +52,7 @@ class MatchForm extends Component {
             <div className = "matchForm">
                 {this.renderDefault()}
                 <div className = "container">
-                    <SurfboardList email = {this.email} products = {false} key = {1}>
+                    <SurfboardList email = {this.email} products = {false} socket = {this.socket} key = {1}>
                         {this.state.result}
                     </SurfboardList>
                 </div>
@@ -108,7 +108,7 @@ class MatchForm extends Component {
             <div className = "matchForm">
                 <img src = {findAMatch} alt = "form"></img>
                 <div className = "container formContainer">
-                    <h1>Find a Match!</h1>
+                    <h2>Find a Match!</h2>
                     <h4>Please Fill the Following</h4>
                     <form onSubmit = {self.getMatched}>
                         <div className = "form-group">
@@ -141,7 +141,14 @@ class MatchForm extends Component {
                                 <Slider className = "level" min = {0} max = {10} defaultValue = {parseInt(this.level)} handle = {self.handle}/>
                             </div>
                         </div>
-                        <button type = "submit" className = "btn btn-info submitButton">Submit Information</button>
+
+                        <article>
+                            <p>0 - 3: Taking your very first steps. Barely surfed before.</p>
+                            <p>4 - 7: Getting the hang of it. Still covering the basics.</p>
+                            <p>8 - 10: You can surf in your sleep! Wanna Challenge yourself.</p>
+                        </article>
+
+                        <button type = "submit" className = "btn btn-info submitButton">Match!</button>
                     </form>
                 </div>
             </div>  

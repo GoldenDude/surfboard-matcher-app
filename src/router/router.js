@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom';
 import HomePage from '../Components/HomePage';
 
 const path = window.location.pathname;
-
+console.log(path);
 const ReactRouter = () => {
     return (
         <React.Fragment>
