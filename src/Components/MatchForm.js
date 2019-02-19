@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Slider               from 'rc-slider';
 import Tooltip              from 'rc-tooltip';
 import SurfboardList        from './SurfboardList';
-import openSocket           from 'socket.io-client';
 import findAMatch           from '../findAMatch.jpg';
 import                      'rc-slider/assets/index.css';
 import                      'rc-tooltip/assets/bootstrap.css';
@@ -124,12 +123,15 @@ class MatchForm extends Component {
                             <label name = "weight">Location</label>
                             <div className = "wrapper">
                                 <div className = "toggle_radio">
-                                    <input type = "radio" checked  className = "toggle_option" 
-                                            id = "first_toggle" name = "toggle_option" value = {4219} onChange = {self.handleLocation}/>
-                                    <input type = "radio" className = "toggle_option" 
-                                            id = "second_toggle" name = "toggle_option" value = {194} onChange = {self.handleLocation}/>
-                                    <label className = "firstLabel" htmlFor = "first_toggle"><p>Ashdod, Israel</p></label>
-                                    <label className = "secondLabel" htmlFor = "second_toggle"><p>Nazaré, Portugal</p></label>
+                                    
+                                    <label className = "firstLabel" htmlFor = "first_toggle"><p>Ashdod, Israel</p>
+                                            <input type = "radio" className = "toggle_option" 
+                                                id = "second_toggle" name = "toggle_option" value = {194} onChange = {self.handleLocation}/>
+                                    </label>
+                                    <label className = "secondLabel" htmlFor = "second_toggle"><p>Nazaré, Portugal</p>
+                                            <input type = "radio" checked  className = "toggle_option" 
+                                                id = "first_toggle" name = "toggle_option" value = {4219} onChange = {self.handleLocation}/>
+                                    </label>
                                     <div className = "toggle_option_slider"></div>
                                 </div>
                             </div>

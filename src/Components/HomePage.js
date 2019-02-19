@@ -34,7 +34,6 @@ class HomePage extends Component{
 
     responseGoogle(response){
         let profile = response.profileObj;
-        console.log(profile);
         const getUserUrl = `https://surfboard-matcher.herokuapp.com/getUser?email=${profile.email}`;
         const addUserUrl = 'https://surfboard-matcher.herokuapp.com/addUser';
         const newUser = {
@@ -50,7 +49,6 @@ class HomePage extends Component{
             },
         }).then(res => res.json())
             .then(json => {
-                console.log(json);
                 /* Checking if user already exists in the database before trying to add it */
                 if(json.result === 'Failure'){
                     console.log("Adding a New User");

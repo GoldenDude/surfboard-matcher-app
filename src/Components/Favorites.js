@@ -16,16 +16,27 @@ class Favorites extends Component{
 
         this.add             = this.add.bind(this);
         this.nextID          = this.nextID.bind(this);
+        this.loadFavorite    = this.loadFavorite.bind(this);
         this.handleFavChange = this.handleFavChange.bind(this);
     }
 
     componentDidMount(){
+       this.loadFavorite();
+
+        this.socket.on('favChange', data => {
+            this.handleFavChange(data.email);
+        });
+    }
+
+    loadFavorite(){
         let self = this;
         const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.email}`;
 
         fetch(getHistoryUrl).then(res => res.json())
                               .then(json => {
-                                     json.map(surfboard => {
+                                    this.surfboards = [];
+                                    this.setState({loaded: false});
+                                    json.map(surfboard => {
                                         self.add({id: surfboard._id, brand: surfboard.brand, userMinWeight: surfboard.userMinWeight, userMaxWeight: surfboard.userMaxWeight,
                                             width: surfboard.width, thickness: surfboard.thickness, height: surfboard.height, maxSwell: surfboard.maxSwell, favorite: true});
                                         return 0;
@@ -33,15 +44,18 @@ class Favorites extends Component{
                                 this.setState({loaded: true});
                               })
         .catch(err => console.log(err));
-
-        this.socket.on('favChange', data => {
-            this.handleFavChange(data.email);
-        });
     }
 
-    handleFavChange(data){
-        console.log(data);
-        // console.log(data.email + "\n" + this.email);
+    handleFavChange(email){
+
+        if(this.email === email){
+            this.loadFavorite();
+        }
+
+        else {
+            console.log("Nothing to do!");
+            return;
+        }
     }
 
     add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false}){

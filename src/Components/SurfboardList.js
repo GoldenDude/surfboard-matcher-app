@@ -19,10 +19,12 @@ class SurfboardList extends Component{
         this.nextID             = this.nextID.bind(this);
         this.loadMore           = this.loadMore.bind(this);
         this.addToFav           = this.addToFav.bind(this);
+        this.addToShown         = this.addToShown.bind(this);
         this.removeFromFav      = this.removeFromFav.bind(this);
         this.eachSurfboard      = this.eachSurfboard.bind(this);
         this.renderMatched      = this.renderMatched.bind(this);
         this.renderProducts     = this.renderProducts.bind(this);
+        this.handleFavChange    = this.handleFavChange.bind(this);
     }
 
     componentDidMount(){
@@ -70,6 +72,10 @@ class SurfboardList extends Component{
                     return 0;
             })
         }
+
+        this.socket.on('favChange', data => {
+            this.handleFavChange(data.email, data.id);
+        })
     }
 
     add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false ,i = 0}){
@@ -87,24 +93,22 @@ class SurfboardList extends Component{
         })
 
         if(i < this.state.shown){
-            this.setState(prevState => ({
-                shownSurfboards: [
-                    ...prevState.shownSurfboards, {
-                        id: id !== null? id : this.nextID(prevState.shownSurfboards),
-                        brand: brand,
-                        userMinWeight: userMinWeight,
-                        userMaxWeight: userMaxWeight,
-                        width: width,
-                        thickness: thickness,
-                        height: height,
-                        maxSwell: maxSwell,
-                        favorite: favorite
-                    }
-                ]
-            }))
+            let surfboard = {
+                id: id !== null? id : this.nextID(this.state.shownSurfboards),
+                brand: brand,
+                userMinWeight: userMinWeight,
+                userMaxWeight: userMaxWeight,
+                width: width,
+                thickness: thickness,
+                height: height,
+                maxSwell: maxSwell,
+                favorite: favorite
+            }
+
+            this.addToShown(surfboard);
         }
     }
-    
+
     nextID(surfboards = []){
         let max = surfboards.reduce((prev, curr) => prev.id > curr.id ? prev.id :  curr.id, 0);
         return ++max;
@@ -127,6 +131,31 @@ class SurfboardList extends Component{
                 </div>
             </div>
         )
+    }
+
+    handleFavChange(email, id){
+        let self = this;
+        console.log(email + " " + id);
+        if(self.email === email){
+            for(let i = 0; i < self.allSurfboards.length; ++i){
+                if(id === self.allSurfboards[i].id){
+                    self.allSurfboards[i].favorite = !self.allSurfboards[i].favorite;
+
+                    if(i < this.state.shownSurfboards.length){
+                        this.setState({shownSurfboards: []});
+                        for(let i = 0; i < this.state.shown; ++i){
+                            this.addToShown(this.allSurfboards[i]);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        else{
+            console.log("Nothing to do");
+            return;
+        }
     }
 
     loadMore(){
@@ -209,10 +238,9 @@ class SurfboardList extends Component{
                 body: JSON.stringify(json)
             }).then(res => res.json())
                 .then(json => {
-                    console.log(JSON.stringify(json));  
                     if(json.result === "Success"){
                         surfboard.setState({favorite: true});
-                        this.socket.emit('favChange', {email: this.email});
+                        this.socket.emit('favChange', {email: this.email, id: surfboardToAdd.id});
                     }   
                 })
             .catch(err => console.log(err));
@@ -228,10 +256,10 @@ class SurfboardList extends Component{
                 'Accept': 'application/json',
             },
         }).then(res => res.json())
-            .then(json => {
-                console.log(JSON.stringify(json));  
+            .then(json => { 
                 if(json.result === "Success"){
                     surfboard.setState({favorite: false});
+                    this.socket.emit('favChange', {email: this.email, id: index});
                 }   
             })
         .catch(err => console.log(err));
