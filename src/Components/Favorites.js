@@ -40,7 +40,8 @@ class Favorites extends Component{
     }
 
     handleFavChange(data){
-        console.log(data.email + "\n" + this.email);
+        console.log(data);
+        // console.log(data.email + "\n" + this.email);
     }
 
     add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false}){

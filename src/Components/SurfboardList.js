@@ -212,7 +212,7 @@ class SurfboardList extends Component{
                     console.log(JSON.stringify(json));  
                     if(json.result === "Success"){
                         surfboard.setState({favorite: true});
-                        this.socket.emit('favChange');
+                        this.socket.emit('favChange', {email: this.email});
                     }   
                 })
             .catch(err => console.log(err));
