@@ -136,7 +136,6 @@ class SurfboardList extends Component{
         let oldShown = self.state.shown;
 
         if(oldShown >= self.allSurfboards.length){
-            oldShown = self.allSurfboards.length;
             document.body.getElementsByClassName("loadMore")[0].style.display = "none";
             return;
         }
@@ -181,9 +180,9 @@ class SurfboardList extends Component{
         let surfboardToAdd;
 
         /* Finding the surfboard in the state */
-        this.state.shownSurfboards.map( surfboard => {
-            if(surfboard.id === index)
-                surfboardToAdd = surfboard;
+        this.state.shownSurfboards.map( shownSurfboard => {
+            if(shownSurfboard.id === index)
+                surfboardToAdd = shownSurfboard;
 
             return null;
         })
@@ -242,7 +241,7 @@ class SurfboardList extends Component{
 
     /* at least 2 rows of surfboards */
     renderProducts(){
-        document.body.style.height = (this.state.shown / 4) * 720 + 2050 + "px";
+        document.body.style.height = (this.state.shown / 4) * 720 + 2985 + "px";
         return(
             <div>
                 <div className = 'surfboardList'>

@@ -27,11 +27,17 @@ html, body, #root {
     height: 670px;
 }
 
+.navLinkContainer{
+    position: relative;
+    margin: auto;
+    left: -50px;
+    top: 10px;
+}
+
 .navbar{
     position: sticky;
     width: 100%;
     background-color:#1f1f1f;
-    padding-left: 370px;
     z-index: 1;
     top: 0;
 }
@@ -41,8 +47,10 @@ html, body, #root {
     text-decoration: none;
     font-weight: bold;
     padding: 5px;
+    margin-top: 10px;
     border-radius: 5px;
     margin-right: 30px;
+    max-height: 56px;
     color: #ffffff;
 }
 
@@ -51,10 +59,6 @@ html, body, #root {
     font-family: Arial, sans-serif;
     background-color: #00b0ff;
     color: #ffffff;
-}
-
-.Matcher{
-    margin-right: 130px;
 }
 
 .saved{
@@ -160,10 +164,7 @@ h5{
 
 .formContainer{
     position: relative;
-    /* top: 1147px; */
-    /* left: 350px; */
     width: 520px ;
-    /*width: 480px*/
     border: 3px solid #E4E4E4;
     border-radius: 10px;
     padding: 25px;
@@ -313,6 +314,27 @@ h5{
     position: relative;
     left: 290px;
     top: 20px;
+}
+.userProfile{
+    position: relative;
+    bottom: 8px;
+    float: right;
+    width: 135px;
+    left: 150px;
+}
+.userPicture{
+    float: left;
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+}
+
+.userProfile h6{
+    float: left;
+    text-align: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    color: #ffffff;
 }
 
 @media(max-width: 1366px) {

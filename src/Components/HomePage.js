@@ -1,4 +1,5 @@
 import logo from '../logo.png';
+import Header from '../Header';
 import MatchForm from './MatchForm';
 import {Element} from 'react-scroll';
 import React, { Component }  from 'react';
@@ -11,14 +12,15 @@ class HomePage extends Component{
     constructor(props){
         super(props);
 
-        this.name   = null;
-        this.email  = null;
+        this.name   = "Edan Azran";
+        this.email  = "edanazran@gmail.com";
+        this.pic    = "https://lh6.googleusercontent.com/-dq7R4e_JKIA/AAAAAAAAAAI/AAAAAAAABxE/NLowvwVU7EM/s96-c/photo.jpg";
         this.level  = 0;
         this.weight = 0;
         this.height = 0;
         
         this.state = {
-            logged: false,
+            logged: true,
         }
                 
         this.renderLogged        = this.renderLogged.bind(this);
@@ -29,6 +31,7 @@ class HomePage extends Component{
 
     responseGoogle(response){
         let profile = response.profileObj;
+        console.log(profile);
         const getUserUrl = `https://surfboard-matcher.herokuapp.com/getUser?email=${profile.email}`;
         const addUserUrl = 'https://surfboard-matcher.herokuapp.com/addUser';
         const newUser = {
@@ -68,8 +71,9 @@ class HomePage extends Component{
                     this.level  = json.level;
                 };
 
-                this.email = profile.email;
                 this.name  = profile.name;
+                this.email = profile.email;
+                this.pic   = profile.imageUrl;
                 this.setState({
                     logged: true
                 });
@@ -85,6 +89,7 @@ class HomePage extends Component{
     renderLogged(){
         return (
             <div>
+                <Header userName = {this.name} profilePic = {this.pic}/>
                 <div>
                     <Element id = "top"/>
                     <div className = "firstBackground">
@@ -94,12 +99,13 @@ class HomePage extends Component{
                             </div>
                         </div>
                     </div>
+
                     <Element id = "liveCams">
                         <div className = "iframeContainer">
                             <img className = "spotsPic" src = {SurfingSpots} alt = "spots"/>
-                            <iframe src="https://www.youtube.com/embed/n_e-kzztGIU"
+                            <iframe src="https://www.youtube.com/embed/gDDg-fO_ESk?autoplay=1"
                                 frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Nazare" allowFullScreen/>
-                            <iframe src="https://www.youtube.com/embed/ArBfFABUDWA" 
+                            <iframe src="https://www.youtube.com/embed/ArBfFABUDWA?autoplay=1" 
                                 frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title = "Ashdod" allowFullScreen/>
                         </div>
                     </Element>
@@ -110,6 +116,7 @@ class HomePage extends Component{
                                    height = {this.height}
                         />
                     </Element>
+
                     <img src = {ProductsPic} className = "productPic" alt = "products"/>
                     <Element id = "products" className = "container">
                         <SurfboardList email = {this.email} userName = {this.name} products = {true}/>

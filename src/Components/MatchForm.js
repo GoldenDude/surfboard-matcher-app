@@ -85,21 +85,21 @@ class MatchForm extends Component {
             if(self.state.Ashdod >= 4 && self.state.Nazare >= 4){
                 warning = <article className = "warning">WARNING!
                 <p className = "warningText">Due to high sea levels, surfing in <b>Nazaré</b> & <b>Ashdod</b> is 
-                                         currently dangerous and not recommended for beginners!</p>
+                                            currently dangerous and not recommended for beginners!</p>
               </article>
             }
 
             else if(self.state.Ashdod >= 4){
                 warning = <article className = "warning">WARNING!
-                <p className = "warningText">Due to high sea levels, surfing in <b>Ashdod</b> is 
-                                         currently dangerous and not recommended for beginners!</p>
-              </article>
+                                <p className = "warningText">Due to high sea levels, surfing in <b>Ashdod</b> is 
+                                                             currently dangerous and not recommended for beginners!</p>
+                          </article>
             }
 
                 else if(self.state.Nazare >= 4){
                     warning = <article className = "warning">WARNING!
                                 <p className = "warningText">Due to high sea levels, surfing in <b>Nazaré</b> is 
-                                                         currently dangerous and not recommended for beginners!</p>
+                                                             currently dangerous and not recommended for beginners!</p>
                               </article>
                 }
         }
@@ -241,7 +241,7 @@ class MatchForm extends Component {
         this.setState({
             Nazare: Nazare,
             Ashdod: Ashdod 
-        })
+        });
     }
 
     nextID(surfboards = []){
