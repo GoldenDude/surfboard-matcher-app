@@ -12,15 +12,15 @@ class HomePage extends Component{
     constructor(props){
         super(props);
 
-        this.name   = "Edan Azran";
-        this.email  = "edanazran@gmail.com";
-        this.pic    = "https://lh6.googleusercontent.com/-dq7R4e_JKIA/AAAAAAAAAAI/AAAAAAAABxE/NLowvwVU7EM/s96-c/photo.jpg";
+        this.name   = null;
+        this.email  = null;
+        this.pic    = null;
         this.level  = 0;
         this.weight = 0;
         this.height = 0;
         
         this.state = {
-            logged: true,
+            logged: false,
         }
                 
         this.renderLogged        = this.renderLogged.bind(this);
