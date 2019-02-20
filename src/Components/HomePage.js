@@ -24,7 +24,7 @@ class HomePage extends Component{
         this.socket     = openSocket(consts.SERVICE_URL);
         
         this.state = {
-            logged: false,
+            logged: false
         }
                 
         this.renderLogged        = this.renderLogged.bind(this);
