@@ -174,8 +174,8 @@ class MatchForm extends Component {
             let size = json.length;
             let added = 0;
             /*
-                Checking if the user's surfboards history appear in the record of matched surfboards according to parameters in form 
-                to indicate in the record of matched surfboards the surfboards that are in the user's favorites.
+                Checking if the user's surfboards history appear in the list of matched surfboards according to parameters in form 
+                in order to return surfboards that the user did not see yet(surfboards that are not in his surfboards history).
             */
             for(let i = 0; i < size && added < consts.MATCHED_SHOWN; ++i){
                 let favorite = false;
