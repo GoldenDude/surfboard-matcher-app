@@ -18,16 +18,13 @@ class MatchForm extends Component {
         this.weight     = this.props.weight;
         this.height     = this.props.height;
         this.socket     = this.props.socket;
-
+        this.result     = [];
         this.state = {
-            result: [],
             sent: false,
             Ashdod: 0,
             Nazare: 0
         }
 
-        this.add                = this.add.bind(this);
-        this.nextID             = this.nextID.bind(this);
         this.handle             = this.handle.bind(this);
         this.getMatched         = this.getMatched.bind(this);
         this.renderSent         = this.renderSent.bind(this);
@@ -52,7 +49,7 @@ class MatchForm extends Component {
                 {this.renderDefault()}
                 <div className = "container">
                     <SurfboardList email = {this.email} products = {false} socket = {this.socket} key = {1}>
-                        {this.state.result}
+                        {this.result}
                     </SurfboardList>
                 </div>
             </div>
@@ -163,8 +160,8 @@ class MatchForm extends Component {
         let level = document.body.getElementsByClassName("rc-slider-handle")[0].getAttribute("aria-valuenow");
         self.level = level; 
         const getMatchedUrl = `https://surfboard-matcher.herokuapp.com/matchSurfboard?height=${self.height}&weight=${self.weight}&level=${self.level}&location=${self.location}`;
-        
-        self.setState({result: [], sent: false});
+        self.result = [];
+        self.setState({sent: false});
         let favList;
         const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.email}`;
 
@@ -184,7 +181,7 @@ class MatchForm extends Component {
                     }
                 }
 
-                self.add({id: json[i]._id, brand: json[i].brand, userMinWeight: json[i].userMinWeight, userMaxWeight: json[i].userMaxWeight,
+                self.result.push({id: json[i]._id, brand: json[i].brand, userMinWeight: json[i].userMinWeight, userMaxWeight: json[i].userMaxWeight,
                     width: json[i].width, thickness: json[i].thickness, height: json[i].height, maxSwell: json[i].maxSwell, favorite: favorite});
             }
             self.setState({sent: true});
@@ -214,25 +211,6 @@ class MatchForm extends Component {
         .catch(err => console.log(err));
     }
 
-    add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false}){
-
-        this.setState(prevState => ({
-            result: [
-                ...prevState.result, {
-                    id:id !== null ? id : this.nextID(prevState.result),
-                    brand: brand,
-                    userMinWeight: userMinWeight,
-                    userMaxWeight: userMaxWeight,
-                    width: width,
-                    thickness: thickness,
-                    height: height,
-                    maxSwell: maxSwell,
-                    favorite: favorite
-                }
-            ]
-        }))
-    }
-
     handleLocation(event){
         this.location = event.target.value;
     }
@@ -253,15 +231,9 @@ class MatchForm extends Component {
         });
     }
 
-    nextID(surfboards = []){
-        let max = surfboards.reduce((prev, curr) => prev.id > curr.id ? prev.id :  curr.id, 0);
-        return ++max;
-    }
-
     render(){
         return this.state.sent ? this.renderSent() : this.renderDefault();
     }
-    
 }            
                 
 export default MatchForm;

@@ -80,7 +80,7 @@ class SurfboardList extends Component{
 
     add({id = null, brand = 'default name', userMinWeight = 0, userMaxWeight = 0, width = 0, thickness = 0, height = 0, maxSwell = 0, favorite = false ,i = 0}){
         
-        this.allSurfboards.push({
+        let surfboard = {
             id: id !== null ? id : this.nextID(this.allSurfboards),
             brand: brand,
             userMinWeight: userMinWeight,
@@ -90,21 +90,11 @@ class SurfboardList extends Component{
             height: height,
             maxSwell: maxSwell,
             favorite: favorite
-        })
+        }
+
+        this.allSurfboards.push(surfboard);
 
         if(i < this.state.shown){
-            let surfboard = {
-                id: id !== null? id : this.nextID(this.state.shownSurfboards),
-                brand: brand,
-                userMinWeight: userMinWeight,
-                userMaxWeight: userMaxWeight,
-                width: width,
-                thickness: thickness,
-                height: height,
-                maxSwell: maxSwell,
-                favorite: favorite
-            }
-
             this.addToShown(surfboard);
         }
     }
@@ -135,7 +125,6 @@ class SurfboardList extends Component{
 
     handleFavChange(email, id){
         let self = this;
-        console.log(email + " " + id);
         if(self.email === email){
             for(let i = 0; i < self.allSurfboards.length; ++i){
                 if(id === self.allSurfboards[i].id){
@@ -167,20 +156,23 @@ class SurfboardList extends Component{
             return;
         }
 
-        let newShown = oldShown + 8;
+        let newShown;
+        if(oldShown + 8 > self.allSurfboards.length){
+            newShown = self.allSurfboards.length;
+        }
+
         let surfboard;
         
-        self.setState({shown: newShown});
-
         for(oldShown; oldShown < newShown; ++oldShown){
             surfboard = self.allSurfboards[oldShown];
             this.addToShown(surfboard);
         }  
-
+        
         if(newShown >= self.allSurfboards.length){
             document.body.getElementsByClassName("loadMore")[0].style.display = "none";
         }
-
+        
+        self.setState({shown: newShown});
     }
 
     addToShown(surfboard){
