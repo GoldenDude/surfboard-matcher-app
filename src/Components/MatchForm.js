@@ -12,7 +12,6 @@ class MatchForm extends Component {
     constructor(props) {
         super(props);
         this.name       = null;
-        this.location   = 4219;
         this.email      = this.props.email;
         this.level      = this.props.level;
         this.weight     = this.props.weight;
@@ -20,6 +19,7 @@ class MatchForm extends Component {
         this.socket     = this.props.socket;
         this.result     = [];
         this.state = {
+            location: 4219,
             sent: false,
             Ashdod: 0,
             Nazare: 0
@@ -120,15 +120,14 @@ class MatchForm extends Component {
                             <label name = "weight">Location</label>
                             <div className = "wrapper">
                                 <div className = "toggle_radio">
-                                    
-                                    <label className = "firstLabel" htmlFor = "first_toggle"><p>Ashdod, Israel</p>
-                                            <input type = "radio" className = "toggle_option" 
+                                    <input type = "radio" checked = {this.state.location === 4219} className = "toggle_option" 
+                                            id = "first_toggle" name = "toggle_option" value = {4219} onChange = {self.handleLocation}/>
+                                    <label className = "firstLabel" htmlFor = "first_toggle"> Ashdod, Israel </label>
+
+                                    <input type = "radio" checked = {this.state.location === 194} className = "toggle_option" 
                                                 id = "second_toggle" name = "toggle_option" value = {194} onChange = {self.handleLocation}/>
-                                    </label>
-                                    <label className = "secondLabel" htmlFor = "second_toggle"><p>Nazaré, Portugal</p>
-                                            <input type = "radio" checked  className = "toggle_option" 
-                                                id = "first_toggle" name = "toggle_option" value = {4219} onChange = {self.handleLocation}/>
-                                    </label>
+                                    <label className = "secondLabel" htmlFor = "second_toggle">Nazaré, Portugal</label>
+
                                     <div className = "toggle_option_slider"></div>
                                 </div>
                             </div>
@@ -159,7 +158,7 @@ class MatchForm extends Component {
         let self = this;
         let level = document.body.getElementsByClassName("rc-slider-handle")[0].getAttribute("aria-valuenow");
         self.level = level; 
-        const getMatchedUrl = `https://surfboard-matcher.herokuapp.com/matchSurfboard?height=${self.height}&weight=${self.weight}&level=${self.level}&location=${self.location}`;
+        const getMatchedUrl = `https://surfboard-matcher.herokuapp.com/matchSurfboard?height=${self.height}&weight=${self.weight}&level=${self.level}&location=${self.state.location}`;
         self.result = [];
         self.setState({sent: false});
         let favList;
@@ -196,7 +195,8 @@ class MatchForm extends Component {
 
     updateUserInfo(){
         const updateUrl = `https://surfboard-matcher.herokuapp.com/updateUser?email=${this.email}&height=${this.height}&weight=${this.weight}&level=${this.level}`;
-
+        console.log("Updating user info...");
+        
         fetch(updateUrl, {
             'method': "PUT",
             headers: {
@@ -205,14 +205,16 @@ class MatchForm extends Component {
         }).then(res => res.json())
             .then(json => {
                 if(json.result === 'Failure'){
-                    console.log("Unable to update User's Info");
+                    console.log("Nothing to update");
                 }
+                else console.log("Success!");
             })
         .catch(err => console.log(err));
     }
 
     handleLocation(event){
-        this.location = event.target.value;
+        console.log("Location Change: " + event.target.value);
+        this.setState({location: parseInt(event.target.value)});
     }
 
     handleHeight(event){

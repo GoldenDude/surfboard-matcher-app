@@ -1,5 +1,5 @@
 *{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif !important;
 }
 
 html, body, #root {
@@ -43,7 +43,6 @@ html, body, #root {
 }
 
 .navLink{
-    font-family: Arial, sans-serif;
     text-decoration: none;
     font-weight: bold;
     padding: 5px;
@@ -56,7 +55,6 @@ html, body, #root {
 
 .navLink:hover{
     text-decoration: none;
-    font-family: Arial, sans-serif;
     background-color: #00b0ff;
     color: #ffffff;
 }
@@ -64,7 +62,6 @@ html, body, #root {
 .saved{
     background-color: rgb(53, 204, 53);
     color: #FFFFFF;
-    font-family: Arial, sans-serif;
     font-size: 12px;
     margin-top: 10px;
     width: 80%;
@@ -218,7 +215,9 @@ h5{
     width: 129px;
     height: 20px;
     position: absolute;
+    opacity: 0.3;
     top: 3px;
+    background: #00b0ff;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px;
@@ -234,13 +233,9 @@ h5{
   }
 
   #first_toggle:checked ~ .toggle_option_slider{
-    background: #00b0ff;
-    opacity: 0.3;
     left: 3px;
   }
   #second_toggle:checked ~ .toggle_option_slider{
-    background: #00b0ff;
-    opacity: 0.3;
     left: 133px;
   }
 
@@ -321,7 +316,7 @@ h5{
     position: relative;
     bottom: 8px;
     float: right;
-    width: 135px;
+    width: 175px;
     left: 150px;
 }
 .userPicture{
