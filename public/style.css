@@ -316,7 +316,7 @@ h5{
     position: relative;
     bottom: 8px;
     float: right;
-    width: 175px;
+    width: auto;
     left: 150px;
 }
 .userPicture{
