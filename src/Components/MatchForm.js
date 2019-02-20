@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import consts               from '../consts';
 import Slider               from 'rc-slider';
 import Tooltip              from 'rc-tooltip';
 import SurfboardList        from './SurfboardList';
@@ -11,15 +12,16 @@ const Handle = Slider.Handle;
 class MatchForm extends Component {
     constructor(props) {
         super(props);
+        this.result     = [];
         this.name       = null;
         this.email      = this.props.email;
         this.level      = this.props.level;
         this.weight     = this.props.weight;
         this.height     = this.props.height;
         this.socket     = this.props.socket;
-        this.result     = [];
+        
         this.state = {
-            location: 4219,
+            location: consts.ASHDOD,
             sent: false,
             Ashdod: 0,
             Nazare: 0
@@ -76,23 +78,23 @@ class MatchForm extends Component {
         let self = this;
         let warning;
         
-        if(self.state.Ashdod >= 4 || self.state.Nazare >= 4){
+        if(self.state.Ashdod >= consts.MAX_WAVE_HEIGHT || self.state.Nazare >= consts.MAX_WAVE_HEIGHT){
 
-            if(self.state.Ashdod >= 4 && self.state.Nazare >= 4){
+            if(self.state.Ashdod >= consts.MAX_WAVE_HEIGHT && self.state.Nazare >= consts.MAX_WAVE_HEIGHT){
                 warning = <article className = "warning">WARNING!
                 <p className = "warningText">Due to high sea levels, surfing in <b>Nazaré</b> & <b>Ashdod</b> is 
                                             currently dangerous and not recommended for beginners!</p>
               </article>
             }
 
-            else if(self.state.Ashdod >= 4){
+            else if(self.state.Ashdod >= consts.MAX_WAVE_HEIGHT){
                 warning = <article className = "warning">WARNING!
                                 <p className = "warningText">Due to high sea levels, surfing in <b>Ashdod</b> is 
                                                              currently dangerous and not recommended for beginners!</p>
                           </article>
             }
 
-                else if(self.state.Nazare >= 4){
+                else if(self.state.Nazare >= consts.MAX_WAVE_HEIGHT){
                     warning = <article className = "warning">WARNING!
                                 <p className = "warningText">Due to high sea levels, surfing in <b>Nazaré</b> is 
                                                              currently dangerous and not recommended for beginners!</p>
@@ -120,12 +122,12 @@ class MatchForm extends Component {
                             <label name = "weight">Location</label>
                             <div className = "wrapper">
                                 <div className = "toggle_radio">
-                                    <input type = "radio" checked = {this.state.location === 4219} className = "toggle_option" 
-                                            id = "first_toggle" name = "toggle_option" value = {4219} onChange = {self.handleLocation}/>
+                                    <input type = "radio" checked = {this.state.location === consts.ASHDOD} className = "toggle_option" 
+                                            id = "first_toggle" name = "toggle_option" value = {consts.ASHDOD} onChange = {self.handleLocation}/>
                                     <label className = "firstLabel" htmlFor = "first_toggle"> Ashdod, Israel </label>
 
-                                    <input type = "radio" checked = {this.state.location === 194} className = "toggle_option" 
-                                                id = "second_toggle" name = "toggle_option" value = {194} onChange = {self.handleLocation}/>
+                                    <input type = "radio" checked = {this.state.location === consts.NAZARE} className = "toggle_option" 
+                                                id = "second_toggle" name = "toggle_option" value = {consts.NAZARE} onChange = {self.handleLocation}/>
                                     <label className = "secondLabel" htmlFor = "second_toggle">Nazaré, Portugal</label>
 
                                     <div className = "toggle_option_slider"></div>
@@ -158,21 +160,24 @@ class MatchForm extends Component {
         let self = this;
         let level = document.body.getElementsByClassName("rc-slider-handle")[0].getAttribute("aria-valuenow");
         self.level = level; 
-        const getMatchedUrl = `https://surfboard-matcher.herokuapp.com/matchSurfboard?height=${self.height}&weight=${self.weight}&level=${self.level}&location=${self.state.location}`;
+        const getMatchedUrl = `${consts.SERVICE_URL}/matchSurfboard?height=${self.height}&weight=${self.weight}&level=${self.level}&location=${self.state.location}`;
         self.result = [];
         self.setState({sent: false});
         let favList;
-        const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.email}`;
+        const getHistoryUrl = `${consts.SERVICE_URL}/getHistory?email=${self.email}`;
 
         fetch(getMatchedUrl).then(res => res.json()).then(async json => {
-            await fetch(getHistoryUrl).then(res => res.json()).then(json => favList = json);
+            await fetch(getHistoryUrl).then(res => res.json())
+                                        .then(json => favList = json)
+                    .catch(err => console.log(err));
+
             let size = json.length;
             let added = 0;
             /*
                 Checking if the user's surfboards history appear in the record of matched surfboards according to parameters in form 
                 to indicate in the record of matched surfboards the surfboards that are in the user's favorites.
             */
-            for(let i = 0; i < size && added < 4; ++i){
+            for(let i = 0; i < size && added < consts.MATCHED_SHOWN; ++i){
                 let favorite = false;
 
                 for(let j = 0; j < favList.length; ++j){
@@ -201,7 +206,7 @@ class MatchForm extends Component {
     }
 
     updateUserInfo(){
-        const updateUrl = `https://surfboard-matcher.herokuapp.com/updateUser?email=${this.email}&height=${this.height}&weight=${this.weight}&level=${this.level}`;
+        const updateUrl = `${consts.SERVICE_URL}/updateUser?email=${this.email}&height=${this.height}&weight=${this.weight}&level=${this.level}`;
         console.log("Updating user info...");
 
         fetch(updateUrl, {

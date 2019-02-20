@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import {MdFavoriteBorder} from 'react-icons/md';
-import {MdFavorite} from 'react-icons/md';
+import {MdFavoriteBorder}   from 'react-icons/md';
+import {MdFavorite}         from 'react-icons/md';
 
 class Surfboard extends Component{
     constructor(props){
         super(props);
+        
         this.state = {
             favorite: this.props.favorite
         }
@@ -25,28 +26,27 @@ class Surfboard extends Component{
 
     renderFavorite(){
         return(
-            <div className = "surfboard">
-                {this.props.children}
-                <span>
-                    <button onClick = {this.removeFromFav} className = "btn btn-primary addToFav"><MdFavorite className = "Heart"/>Favorite</button>
-                </span>
-            </div>
+            <span>
+                <button onClick = {this.removeFromFav} className = "btn btn-primary addToFav"><MdFavorite className = "Heart"/>Favorite</button>
+            </span>
        )
     }
 
     renderRegular(){
         return(
-            <div className = "surfboard">
-                {this.props.children}
-                <span>
-                    <button onClick = {this.addToFav} className = "btn btn-primary addToFav nonFav"><MdFavoriteBorder className = "Heart"/>Add To Favorites</button>
-                </span>
-            </div>
+            <span>
+                <button onClick = {this.addToFav} className = "btn btn-primary addToFav nonFav"><MdFavoriteBorder className = "Heart"/>Add To Favorites</button>
+            </span>
        )
     }
 
     render(){
-        return this.state.favorite ? this.renderFavorite() : this.renderRegular();
+        return (
+            <div className = "surfboard">
+                {this.props.children}
+                {this.state.favorite ? this.renderFavorite() : this.renderRegular()}
+            </div>
+        )
     }
 }
 

@@ -1,26 +1,27 @@
-import logo from '../logo.png';
-import Header from '../Header';
-import MatchForm from './MatchForm';
-import Favorites from './Favorites';
-import {Element} from 'react-scroll';
-import React, { Component }  from 'react';
-import ProductsPic from '../products4.jpg';
-import SurfboardList from './SurfboardList';
-import openSocket   from 'socket.io-client';
-import GoogleLogin from 'react-google-login';
-import favoritesPic from '../favoritesPic.png';
-import SurfingSpots from '../surfingSpots.png';
+import React, { Component }     from 'react';
+import Header                   from '../Header';
+import consts                   from '../consts';
+import logo                     from '../logo.png';
+import MatchForm                from './MatchForm';
+import Favorites                from './Favorites';
+import {Element}                from 'react-scroll';
+import SurfboardList            from './SurfboardList';
+import openSocket               from 'socket.io-client';
+import ProductsPic              from '../products4.jpg';
+import GoogleLogin              from 'react-google-login';
+import favoritesPic             from '../favoritesPic.png';
+import SurfingSpots             from '../surfingSpots.png';
 
 class HomePage extends Component{
     constructor(props){
         super(props);
-        this.name   = null;
-        this.email  = null;
-        this.pic    = null;
-        this.level  = 0;
-        this.weight = 0;
-        this.height = 0;
-        this.socket     = openSocket('https://surfboard-matcher.herokuapp.com');
+        this.level      = 0;
+        this.height     = 0;
+        this.weight     = 0;
+        this.pic        = null;
+        this.name       = null;
+        this.email      = null;
+        this.socket     = openSocket(consts.SERVICE_URL);
         
         this.state = {
             logged: false,
@@ -34,8 +35,9 @@ class HomePage extends Component{
 
     responseGoogle(response){
         let profile = response.profileObj;
-        const getUserUrl = `https://surfboard-matcher.herokuapp.com/getUser?email=${profile.email}`;
-        const addUserUrl = 'https://surfboard-matcher.herokuapp.com/addUser';
+        const getUserUrl = `${consts.SERVICE_URL}/getUser?email=${profile.email}`;
+        const addUserUrl = `${consts.SERVICE_URL}/addUser`;
+
         const newUser = {
             email: profile.email,
             name: profile.name
@@ -145,7 +147,7 @@ class HomePage extends Component{
                         <img src = {logo} alt = "Logo" className = "Logo"/>
                         <div className = "login">
                             <GoogleLogin
-                                clientId    = "366517766809-oktrgpvmmhneovtvi5a1q08cos7ahr66.apps.googleusercontent.com"
+                                clientId    = {consts.GOOGLE_CLIENT_ID}
                                 buttonText  = "Login With Google"
                                 onSuccess   = {this.responseGoogle}
                                 onFailure   = {this.failedToConnect}

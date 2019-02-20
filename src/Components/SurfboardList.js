@@ -1,18 +1,19 @@
-import Surfboard from './Surfboard';
 import React, { Component } from 'react';
-import SurfboardPic from '../surfboard.png';
+import consts               from '../consts';
+import Surfboard            from './Surfboard';
+import SurfboardPic         from '../surfboard.png';
 
 class SurfboardList extends Component{
     constructor(props){
         super(props);
         this.allSurfboards = [];
-        this.email         =  this.props.email;
+        this.email         = this.props.email;
         this.socket        = this.props.socket;
 
         this.state = {
-            products: this.props.products,
             shownSurfboards: [],
-            shown: this.props.products ? 8 : this.props.children.length
+            products: this.props.products,
+            shown: this.props.products ? consts.PRODUCTS_SHOWN : this.props.children.length
         }
 
         this.add                = this.add.bind(this);
@@ -29,9 +30,10 @@ class SurfboardList extends Component{
 
     componentDidMount(){
         let self = this;
-        const getAllUrl = 'https://surfboard-matcher.herokuapp.com/getAllSurfboards';
-        const getHistoryUrl = `https://surfboard-matcher.herokuapp.com/getHistory?email=${self.email}`;
+        const getAllUrl = `${consts.SERVICE_URL}/getAllSurfboards`;
+        const getHistoryUrl = `${consts.SERVICE_URL}/getHistory?email=${self.email}`;
         let favList;
+        
         if(self.state.products){
             fetch(getAllUrl)
             .then(res => res.json())
@@ -157,9 +159,10 @@ class SurfboardList extends Component{
         }
 
         let newShown;
-        if(oldShown + 8 > self.allSurfboards.length){
+        if(oldShown + consts.PRODUCTS_SHOWN > self.allSurfboards.length){
             newShown = self.allSurfboards.length;
         }
+        else newShown = oldShown + consts.PRODUCTS_SHOWN;
 
         let surfboard;
         
@@ -195,7 +198,7 @@ class SurfboardList extends Component{
     }
 
     addToFav(index, surfboard){
-        const url = 'https://surfboard-matcher.herokuapp.com/addUserSurfboard';
+        const url = `${consts.SERVICE_URL}/addUserSurfboard`;
         let surfboardToAdd;
 
         /* Finding the surfboard in the state */
@@ -240,7 +243,7 @@ class SurfboardList extends Component{
     }
 
     removeFromFav(index, surfboard){
-        const url = `https://surfboard-matcher.herokuapp.com/deleteFromHistory?_id=${index}&email=${this.email}`;
+        const url = `${consts.SERVICE_URL}/deleteFromHistory?_id=${index}&email=${this.email}`;
 
         fetch(url, {
             method: 'DELETE',

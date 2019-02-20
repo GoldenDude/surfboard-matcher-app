@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SurfboardList from './SurfboardList';
+import SurfboardList        from './SurfboardList';
 
 class Favorites extends Component{
 
