@@ -163,10 +163,6 @@ h5{
     margin-top: 150px;
 }
 
-.clear{
-    clear: both;
-}
-
 .toggle_radio{
     position: relative;
     background: rgba(31,31,31,.1);
