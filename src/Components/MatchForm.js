@@ -166,12 +166,13 @@ class MatchForm extends Component {
 
         fetch(getMatchedUrl).then(res => res.json()).then(async json => {
             await fetch(getHistoryUrl).then(res => res.json()).then(json => favList = json);
-            let size = json.length < 4 ? json.length : 4;
+            let size = json.length;
+            let added = 0;
             /*
                 Checking if the user's surfboards history appear in the record of matched surfboards according to parameters in form 
                 to indicate in the record of matched surfboards the surfboards that are in the user's favorites.
             */
-            for(let i = 0; i < size; ++i){
+            for(let i = 0; i < size && added < 4; ++i){
                 let favorite = false;
 
                 for(let j = 0; j < favList.length; ++j){
@@ -179,9 +180,15 @@ class MatchForm extends Component {
                         favorite = true;
                     }
                 }
+                
+                if(favorite){
+                    continue;
+                }
 
                 self.result.push({id: json[i]._id, brand: json[i].brand, userMinWeight: json[i].userMinWeight, userMaxWeight: json[i].userMaxWeight,
                     width: json[i].width, thickness: json[i].thickness, height: json[i].height, maxSwell: json[i].maxSwell, favorite: favorite});
+                
+                ++added;
             }
             self.setState({sent: true});
         })
@@ -196,7 +203,7 @@ class MatchForm extends Component {
     updateUserInfo(){
         const updateUrl = `https://surfboard-matcher.herokuapp.com/updateUser?email=${this.email}&height=${this.height}&weight=${this.weight}&level=${this.level}`;
         console.log("Updating user info...");
-        
+
         fetch(updateUrl, {
             'method': "PUT",
             headers: {
